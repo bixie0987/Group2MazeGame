@@ -51,7 +51,7 @@ import java.util.ArrayList;
  * @author Jordan Cohen
  * @version 1.0, Dec 2022
  */
-public class Maze extends World
+public class MyWorld extends World
 {
     // Constants
     public static final int BLOCK_SIZE = 18;
@@ -72,7 +72,7 @@ public class Maze extends World
      * Constructor for objects of class Maze.
      * 
      */
-    public Maze()
+    public MyWorld()
     {    
         super(1024, 800, 1); 
 

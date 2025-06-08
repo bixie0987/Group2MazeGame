@@ -17,9 +17,9 @@ public class RoomBlock extends Block
         visited = false;
         image.setColor(Color.LIGHT_GRAY);
         image.fill();
-        if (Maze.SHOW_CELL_BORDERS){
+        if (MyWorld.SHOW_CELL_BORDERS){
             image.setColor(Color.BLACK);
-            image.drawRect(0,0, Maze.BLOCK_SIZE - 2, Maze.BLOCK_SIZE-2);
+            image.drawRect(0,0, MyWorld.BLOCK_SIZE - 2, MyWorld.BLOCK_SIZE-2);
         }
         setImage(image);
     }
@@ -35,9 +35,9 @@ public class RoomBlock extends Block
     public void setStartBlock (){
         image.setColor(Color.RED);
         image.fill();
-        if (Maze.SHOW_CELL_BORDERS){
+        if (MyWorld.SHOW_CELL_BORDERS){
             image.setColor(Color.BLACK);
-            image.drawRect(0,0, Maze.BLOCK_SIZE - 2, Maze.BLOCK_SIZE-2);
+            image.drawRect(0,0, MyWorld.BLOCK_SIZE - 2, MyWorld.BLOCK_SIZE-2);
         }
         setImage(image);
     }
@@ -45,9 +45,9 @@ public class RoomBlock extends Block
     public void setEndBlock (){
         image.setColor(Color.GREEN);
         image.fill();
-        if (Maze.SHOW_CELL_BORDERS){
+        if (MyWorld.SHOW_CELL_BORDERS){
             image.setColor(Color.BLACK);
-            image.drawRect(0,0, Maze.BLOCK_SIZE - 2, Maze.BLOCK_SIZE-2);
+            image.drawRect(0,0, MyWorld.BLOCK_SIZE - 2, MyWorld.BLOCK_SIZE-2);
         }
         setImage(image);
     }

@@ -19,7 +19,7 @@ public class Block extends Actor
         this.mazeX = mazeX;
         this.mazeY = mazeY;
         
-        image = new GreenfootImage (Maze.BLOCK_SIZE, Maze.BLOCK_SIZE);
+        image = new GreenfootImage (MyWorld.BLOCK_SIZE, MyWorld.BLOCK_SIZE);
     }
     
     public int getMazeX () {

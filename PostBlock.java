@@ -13,9 +13,9 @@ public class PostBlock extends Block
         super(false, mazeX, mazeY);
         image.setColor(Color.DARK_GRAY);
         image.fill();
-        if (Maze.SHOW_CELL_BORDERS){
+        if (MyWorld.SHOW_CELL_BORDERS){
             image.setColor(Color.RED);
-            image.drawRect(0,0, Maze.BLOCK_SIZE - 2, Maze.BLOCK_SIZE-2);
+            image.drawRect(0,0, MyWorld.BLOCK_SIZE - 2, MyWorld.BLOCK_SIZE-2);
         }
         setImage(image);
     }
