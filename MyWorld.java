@@ -67,6 +67,8 @@ public class MyWorld extends World
 
     // Class Objects and Variables
     private Block[][] theGrid;
+    
+    private Player player;
 
     /**
      * Constructor for objects of class Maze.
@@ -86,8 +88,22 @@ public class MyWorld extends World
         if (!DEMO_ALGORITHM)
             init(); 
         
-        Player player = new Player();
+        player = new Player();
         addObject(player, 78, 58);
+        
+        spawnEnemy();
+    }
+    
+    
+    public void spawnEnemy() {
+        int x, y;
+        do {
+            x = Greenfoot.getRandomNumber(BLOCKS_WIDE);
+            y = Greenfoot.getRandomNumber(BLOCKS_HIGH);
+        } while (!(theGrid[x][y] instanceof RoomBlock)); // must be a room
+    
+        Enemy enemy = new Enemy(player);
+        addObject(enemy, getXCoordinate(x), getYCoordinate(y));
     }
 
     /**
@@ -302,5 +318,12 @@ public class MyWorld extends World
     public static int getYCell(int coordinate){
         return (coordinate - Y_OFFSET) % BLOCK_SIZE;
     }
+    
+    // Getter
+    public Block[][] getGrid() {
+    return theGrid;
+    }
+    
+
 
 }
