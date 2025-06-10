@@ -87,7 +87,7 @@ public class MyWorld extends World
             init(); 
         
         Player player = new Player();
-        
+        addObject(player, 78, 58);
     }
 
     /**
