@@ -41,15 +41,5 @@ public class RoomBlock extends Block
         }
         setImage(image);
     }
-    
-    public void setEndBlock (){
-        image.setColor(Color.GREEN);
-        image.fill();
-        if (MyWorld.SHOW_CELL_BORDERS){
-            image.setColor(Color.BLACK);
-            image.drawRect(0,0, MyWorld.BLOCK_SIZE - 2, MyWorld.BLOCK_SIZE-2);
-        }
-        setImage(image);
-    }
 
 }

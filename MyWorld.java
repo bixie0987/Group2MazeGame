@@ -128,9 +128,14 @@ public class MyWorld extends World
         // Report generation time if desired
         // System.out.println("Generated a Maze size " + BLOCKS_WIDE + " x " + BLOCKS_HIGH + " in " + (duration/1000000.0) + " ms.");
         
-        // Set start and end blocks
+        // Set start block
         ((RoomBlock)theGrid[1][1]).setStartBlock();
-        ((RoomBlock)theGrid[BLOCKS_WIDE-2][BLOCKS_HIGH-2]).setEndBlock();
+        // Set end block
+        removeObject(theGrid[BLOCKS_WIDE-2][BLOCKS_HIGH-2]);
+        EndBlock end = new EndBlock(BLOCKS_WIDE-2, BLOCKS_HIGH-2);
+        theGrid[BLOCKS_WIDE-2][BLOCKS_HIGH-2] = end;
+        addObject(end, getXCoordinate(BLOCKS_WIDE-2), getYCoordinate(BLOCKS_HIGH-2));
+
     }
 
     /**
