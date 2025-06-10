@@ -92,7 +92,10 @@ public class MyWorld extends World
         if (!DEMO_ALGORITHM)
             init(); 
 
+            
         addObject(player, 78, 58);
+        buildLighting();
+        adjustLighting();
         //addObject(player, getXCoordinate(1), getYCoordinate(1));
         spawnEnemy();
     }
@@ -124,9 +127,7 @@ public class MyWorld extends World
         if (DEMO_ALGORITHM){
             init();
         }
-        buildLighting();
-        addObject(player, 30, 40);
-        adjustLighting();
+        
     }
 
     /**
