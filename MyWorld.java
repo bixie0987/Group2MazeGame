@@ -146,7 +146,7 @@ public class MyWorld extends World
         
         // Report generation time if desired
         // System.out.println("Generated a Maze size " + BLOCKS_WIDE + " x " + BLOCKS_HIGH + " in " + (duration/1000000.0) + " ms.");
-
+*/
         // Set start and end blocks
         ((RoomBlock)theGrid[1][1]).setStartBlock();
         // Set end block
@@ -155,9 +155,10 @@ public class MyWorld extends World
         theGrid[BLOCKS_WIDE-2][BLOCKS_HIGH-2] = end;
         addObject(end, getXCoordinate(BLOCKS_WIDE-2), getYCoordinate(BLOCKS_HIGH-2));
 
+
     }
 
-    /**
+    /*
      * Prepare a Grid for Prim algorithm.
      * 
      * - Blocks around the outside are Posts'
