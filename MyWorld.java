@@ -84,7 +84,10 @@ public class MyWorld extends World
         // Generate the maze, unless we are in demo mode, in which case
         // we will wait until the started () method (when the user clicks run)
         if (!DEMO_ALGORITHM)
-            init();        
+            init(); 
+        
+        Player player = new Player();
+        addObject(player, 78, 58);
     }
 
     /**
