@@ -55,8 +55,8 @@ public class MyWorld extends World
 {
     // Constants
     public static final int BLOCK_SIZE = 18;
-    public static final int BLOCKS_WIDE = 51; // must be odd
-    public static final int BLOCKS_HIGH = 41; // must be odd
+    public static final int BLOCKS_WIDE = 7; // must be odd
+    public static final int BLOCKS_HIGH = 7; // must be odd
     public static final int X_OFFSET = 60;
     public static final int Y_OFFSET = 40;
     public static final int MODE = 0;
@@ -104,6 +104,12 @@ public class MyWorld extends World
         adjustLighting();
         //addObject(player, getXCoordinate(1), getYCoordinate(1));
         spawnEnemy();
+    }
+    public void act() {
+        // Generate new maze (aka re-instantiate MyWorld) if Player reached EndBlock
+        if(player.getEndBlockReached()) {
+            Greenfoot.setWorld(new MyWorld());
+        }
     }
 
     public void spawnEnemy() {
@@ -230,7 +236,8 @@ public class MyWorld extends World
         long duration = System.nanoTime() - startTime;
 
         // Report generation time if desired
-        // System.out.println("Generated a Maze size " + BLOCKS_WIDE + " x " + BLOCKS_HIGH + " in " + (duration/1000000.0) + " ms.");
+        // System.out.println("Generated a Maze size " + BLOCKS_WIDE + " x " + BLOCKS_HIGH + " in " + (duration/1000000.0) + " ms.")
+        */
 
         // Set start and end blocks
         ((RoomBlock)theGrid[1][1]).setStartBlock();
