@@ -87,7 +87,7 @@ public class MyWorld extends World
             init(); 
         
         Player player = new Player();
-        addObject(player, 78, 58);
+        addObject(player, getXCoordinate(1), getYCoordinate(1));
     }
 
     /**
@@ -108,7 +108,8 @@ public class MyWorld extends World
     private void init(){
         // Start approximately in the middle.
         // You can start on any RoomBlock 
-        int startX = BLOCKS_WIDE / 2, startY =  BLOCKS_HIGH / 2;
+        int startX = BLOCKS_WIDE / 2;
+        int startY =  BLOCKS_HIGH / 2;
         // Both X and Y for generation must be odd as all rooms are (odd, odd)
         if (startX % 2 == 0){
             startX++;
@@ -116,6 +117,8 @@ public class MyWorld extends World
         if (startY % 2 == 0){
             startY++;
         }
+        prims(startX, startY);
+        /*
         // Time generation time
         long startTime = System.nanoTime();
         // Run the generation algorithm
@@ -127,7 +130,7 @@ public class MyWorld extends World
         
         // Report generation time if desired
         // System.out.println("Generated a Maze size " + BLOCKS_WIDE + " x " + BLOCKS_HIGH + " in " + (duration/1000000.0) + " ms.");
-        
+    */
         // Set start and end blocks
         ((RoomBlock)theGrid[1][1]).setStartBlock();
         ((RoomBlock)theGrid[BLOCKS_WIDE-2][BLOCKS_HIGH-2]).setEndBlock();
@@ -148,7 +151,7 @@ public class MyWorld extends World
             for (int x = 0; x < BLOCKS_WIDE; x++){
                 Block b;
                 // Put a unmovable Post on every edge square as well as every every (even, even) square
-                if (x == 0 || y == 0 || x == BLOCKS_WIDE - 1 || y == BLOCKS_HIGH - 1 || y % 2 == 0 && x % 2 == 0){
+                if (x == 0 || y == 0 || x == BLOCKS_WIDE - 1 || y == BLOCKS_HIGH - 1 || (y % 2 == 0 && x % 2 == 0)){
                     b = new PostBlock(x, y);
                     
                 } else if (y % 2 == 1 && x % 2 == 1){ // where y and x are both odd, make a room
@@ -191,7 +194,7 @@ public class MyWorld extends World
         RoomBlock firstRoom = (RoomBlock)theGrid[x][y];
         //path.add (firstRoom);
         firstRoom.visit();
-
+        walls.addAll(getRoomWalls(x,y));
         while (walls.size() > 0){
             // Choose a random wall
 
@@ -236,7 +239,15 @@ public class MyWorld extends World
                     unvisitedRoom.visit();
                     //path.add(unvisitedRoom);
                     walls.addAll(getRoomWalls(unvisitedRoom.getMazeX(), unvisitedRoom.getMazeY()));
-                    procBlock.open();
+                    //turn grid into path
+                    int pX = procBlock.getMazeX();
+                    int pY = procBlock.getMazeY();
+                    removeObject(procBlock);
+
+                    RoomBlock pathBlock = new RoomBlock(pX, pY);
+                    //Replace the WallBlock with the new RoomBlock.
+                    theGrid[pX][pY] = pathBlock;
+                    addObject(pathBlock, getXCoordinate(pX), getYCoordinate(pY));
                 }
             }
             walls.remove(procBlock);
@@ -244,10 +255,17 @@ public class MyWorld extends World
                 repaint(); // This method will redraw the screen even before the act ends, causing one act to go on a LONG time while this generates
             }
         }
-
         return true;
     }
 
+    public boolean isPath(int gridX, int gridY) {
+        //Check for out-of-bounds requests to prevent errors
+        if (gridX < 0 || gridX >= BLOCKS_WIDE || gridY < 0 || gridY >= BLOCKS_HIGH) {
+            return false;
+        }
+        return theGrid[gridX][gridY] instanceof RoomBlock;
+    }
+    
     private ArrayList<WallBlock> getRoomWalls (int x, int y){
         ArrayList<WallBlock> walls = new ArrayList<WallBlock>();
         if (theGrid[x-1][y] instanceof WallBlock){
@@ -292,7 +310,7 @@ public class MyWorld extends World
     }
 
     public static int getXCell(int coordinate){
-        return (coordinate - X_OFFSET) % BLOCK_SIZE;
+        return (coordinate - X_OFFSET) / BLOCK_SIZE;
     }
 
     public static int getYCoordinate (int cellNumber){
@@ -300,7 +318,7 @@ public class MyWorld extends World
     }
 
     public static int getYCell(int coordinate){
-        return (coordinate - Y_OFFSET) % BLOCK_SIZE;
+        return (coordinate - Y_OFFSET) / BLOCK_SIZE;
     }
 
 }
