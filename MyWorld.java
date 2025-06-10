@@ -55,8 +55,8 @@ public class MyWorld extends World
 {
     // Constants
     public static final int BLOCK_SIZE = 18;
-    public static final int BLOCKS_WIDE = 51; // must be odd
-    public static final int BLOCKS_HIGH = 41; // must be odd
+    public static final int BLOCKS_WIDE = 7; // must be odd
+    public static final int BLOCKS_HIGH = 7; // must be odd
     public static final int X_OFFSET = 60;
     public static final int Y_OFFSET = 40;
     public static final int MODE = 0;
@@ -88,12 +88,18 @@ public class MyWorld extends World
         if (!DEMO_ALGORITHM)
             init(); 
         
-        Player player = new Player();
+        player = new Player();
         addObject(player, getXCoordinate(1), getYCoordinate(1));
         
         spawnEnemy();
     }
     
+    public void act() {
+        // Generate new maze (aka re-instantiate MyWorld) if Player reached EndBlock
+        if(player.getEndBlockReached()) {
+            Greenfoot.setWorld(new MyWorld());
+        }
+    }
     
     public void spawnEnemy() {
         int x, y;

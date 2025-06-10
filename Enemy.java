@@ -26,7 +26,7 @@ public class Enemy extends Actor
     }
 
     public void act() {
-        moveTowardPlayer();
+        //moveTowardPlayer();
     }
 
     private void moveTowardPlayer() {
