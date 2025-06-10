@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.ArrayList;
 
 /**
  * Write a description of class Player here.
@@ -8,12 +9,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Player extends Actor
 {
-    /**
-     * Act - do whatever the Player wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
+    
     private int gridX;
     private int gridY;
+    
+    private boolean endBlockReached; // true if player has reached endBlock
+    
     public Player()
     {
         GreenfootImage image = new GreenfootImage(MyWorld.BLOCK_SIZE, MyWorld.BLOCK_SIZE);
@@ -62,6 +63,11 @@ public class Player extends Actor
             
             setLocation(MyWorld.getXCoordinate(gridX), MyWorld.getYCoordinate(gridY));
         }
+        
+        // Check if Player touches EndBlock (MyWorld will generate new maze if so)
+        if(isTouching(EndBlock.class)) {
+            endBlockReached = true;
+        }
     }
     public void checkKeys() {
         int speed = 1;
@@ -77,10 +83,28 @@ public class Player extends Actor
         if (Greenfoot.isKeyDown("d")) {
             setLocation(getX() + speed, getY());
         }
-
-        // Generate new maze (aka re-instantiate MyWorld) if Player touches EndBlock
-        if(isTouching(EndBlock.class)) {
-            Greenfoot.setWorld(new MyWorld());
-        }
+    }
+    
+    public boolean getEndBlockReached() {
+        return endBlockReached;
+    }
+    
+    public ArrayList<Lighting> getNearbyShaders(){
+        //return arraylist of surrounding shaders within a certain radius
+        return (ArrayList<Lighting>)getObjectsInRange(40, Lighting.class);
+    }
+    public ArrayList<Lighting> getFurtherShaders(){
+        //return arraylist of surrounding shaders within a certain radius
+        return (ArrayList<Lighting>)getObjectsInRange(90, Lighting.class);
+    }
+    
+    // getter
+    public int getGridX() {
+        return gridX;
+    }
+    
+    // getter
+    public int getGridY() {
+        return gridY;
     }
 }
