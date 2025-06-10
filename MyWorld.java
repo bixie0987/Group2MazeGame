@@ -90,6 +90,11 @@ public class MyWorld extends World
         // Generate the maze, unless we are in demo mode, in which case
         // we will wait until the started () method (when the user clicks run)
         if (!DEMO_ALGORITHM)
+            init();
+        spawn();
+    }
+    public void spawn(){
+        spawnCoins();
             init(); 
 
         //Play background music
@@ -113,7 +118,6 @@ public class MyWorld extends World
         Enemy enemy = new Enemy(player);
         addObject(enemy, getXCoordinate(x), getYCoordinate(y));
     }
-
     /**
      * Act method for the world
      */
@@ -430,4 +434,15 @@ public class MyWorld extends World
         return theGrid;
     }
 
+    private void spawnCoins ()
+    {
+        int numCoins = 100;
+        for(int i = 0; i<numCoins; i++){
+            int maxX = 1679;  // must be odd
+            int randomX = Greenfoot.getRandomNumber((maxX + 1) / 2) * 2 + 1;
+            int maxY = 719;  // must be odd
+            int randomY = Greenfoot.getRandomNumber((maxX + 1) / 2) * 2 + 1;
+            addObject (new Coins(), randomX, randomY);
+        }
+    }
 }
