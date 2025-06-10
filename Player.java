@@ -36,4 +36,14 @@ public class Player extends Actor
             setLocation(getX() + speed, getY());
         }
     }
+    
+    // getter
+    public int getGridX() {
+        return gridX;
+    }
+    
+    // getter
+    public int getGridY() {
+        return gridY;
+    }
 }
