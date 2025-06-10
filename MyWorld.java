@@ -102,7 +102,7 @@ public class MyWorld extends World
     public void act() {
         // Generate new maze (aka re-instantiate MyWorld) if Player reached EndBlock
         if(player.getEndBlockReached()) {
-            Greenfoot.setWorld(new MyWorld());
+            GameManager.getInstance().onMazeComplete();
         }
     }
     
