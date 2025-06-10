@@ -86,6 +86,11 @@ public class MyWorld extends World
         // Generate the maze, unless we are in demo mode, in which case
         // we will wait until the started () method (when the user clicks run)
         if (!DEMO_ALGORITHM)
+            init();
+        spawn();
+    }
+    public void spawn(){
+        spawnCoins();
             init(); 
         
         player = new Player();
@@ -111,7 +116,6 @@ public class MyWorld extends World
         Enemy enemy = new Enemy(player);
         addObject(enemy, getXCoordinate(x), getYCoordinate(y));
     }
-
     /**
      * Called when Greenfoot's Run button is pressed. Used to start the init() method if the
      * DEMO is turned on because Greenfoot won't repaint() during World construction.
@@ -153,6 +157,7 @@ public class MyWorld extends World
         // Report generation time if desired
         // System.out.println("Generated a Maze size " + BLOCKS_WIDE + " x " + BLOCKS_HIGH + " in " + (duration/1000000.0) + " ms.");
         */
+
         // Set start and end blocks
         ((RoomBlock)theGrid[1][1]).setStartBlock();
         // Set end block
@@ -161,9 +166,10 @@ public class MyWorld extends World
         theGrid[BLOCKS_WIDE-2][BLOCKS_HIGH-2] = end;
         addObject(end, getXCoordinate(BLOCKS_WIDE-2), getYCoordinate(BLOCKS_HIGH-2));
 
+
     }
 
-    /**
+    /*
      * Prepare a Grid for Prim algorithm.
      * 
      * - Blocks around the outside are Posts'
@@ -355,4 +361,15 @@ public class MyWorld extends World
     
 
 
+    private void spawnCoins ()
+    {
+        int numCoins = 100;
+        for(int i = 0; i<numCoins; i++){
+            int maxX = 1679;  // must be odd
+            int randomX = Greenfoot.getRandomNumber((maxX + 1) / 2) * 2 + 1;
+            int maxY = 719;  // must be odd
+            int randomY = Greenfoot.getRandomNumber((maxX + 1) / 2) * 2 + 1;
+            addObject (new Coins(), randomX, randomY);
+        }
+    }
 }
