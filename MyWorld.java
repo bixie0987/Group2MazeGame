@@ -84,9 +84,12 @@ public class MyWorld extends World
         // Generate the maze, unless we are in demo mode, in which case
         // we will wait until the started () method (when the user clicks run)
         if (!DEMO_ALGORITHM)
-            init();        
+            init();
+        spawn();
     }
-
+    public void spawn(){
+        spawnCoins();
+    }
     /**
      * Called when Greenfoot's Run button is pressed. Used to start the init() method if the
      * DEMO is turned on because Greenfoot won't repaint() during World construction.
@@ -300,4 +303,15 @@ public class MyWorld extends World
         return (coordinate - Y_OFFSET) % BLOCK_SIZE;
     }
 
+    private void spawnCoins ()
+    {
+        int numCoins = 100;
+        for(int i = 0; i<numCoins; i++){
+            int maxX = 1679;  // must be odd
+            int randomX = Greenfoot.getRandomNumber((maxX + 1) / 2) * 2 + 1;
+            int maxY = 719;  // must be odd
+            int randomY = Greenfoot.getRandomNumber((maxX + 1) / 2) * 2 + 1;
+            addObject (new Coins(), randomX, randomY);
+        }
+    }
 }
