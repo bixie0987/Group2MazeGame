@@ -13,13 +13,37 @@ public class Player extends Actor
      * Act - do whatever the Player wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    public void act()
+    public Player()
     {
-
+        GreenfootImage img = new GreenfootImage("playerPlaceholder.png");
+        img.scale(20,20);
+        setImage(img);
+    }
+    public void act() {
+        checkKeys();
+    }
+    public void checkKeys() {
+        int speed = 1;
+        if (Greenfoot.isKeyDown("w")) {
+            setLocation(getX(), getY() - speed);
+        }
+        if (Greenfoot.isKeyDown("s")) {
+            setLocation(getX(), getY() + speed);
+        }
+        if (Greenfoot.isKeyDown("a")) {
+            setLocation(getX() - speed, getY());
+        }
+        if (Greenfoot.isKeyDown("d")) {
+            setLocation(getX() + speed, getY());
+        }
     }
     
     public ArrayList<Lighting> getNearbyShaders(){
         //return arraylist of surrounding shaders within a certain radius
         return (ArrayList<Lighting>)getObjectsInRange(40, Lighting.class);
+    }
+    public ArrayList<Lighting> getFurtherShaders(){
+        //return arraylist of surrounding shaders within a certain radius
+        return (ArrayList<Lighting>)getObjectsInRange(90, Lighting.class);
     }
 }

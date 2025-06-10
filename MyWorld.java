@@ -68,10 +68,11 @@ public class MyWorld extends World
     // Class Objects and Variables
     private Block[][] theGrid;
     private Lighting[][] shaders;
+    private ArrayList<Lighting> allShaders = new ArrayList<Lighting>();
     //arraylist of shaders within a certain radius of player
     private ArrayList<Lighting> shaders1;
-    
-    Player player = new Player();
+
+    private Player player = new Player();
 
     /**
      * Constructor for objects of class Maze.
@@ -89,7 +90,23 @@ public class MyWorld extends World
         // Generate the maze, unless we are in demo mode, in which case
         // we will wait until the started () method (when the user clicks run)
         if (!DEMO_ALGORITHM)
-            init();        
+            init(); 
+
+        player = new Player();
+        addObject(player, 78, 58);
+
+        spawnEnemy();
+    }
+
+    public void spawnEnemy() {
+        int x, y;
+        do {
+            x = Greenfoot.getRandomNumber(BLOCKS_WIDE);
+            y = Greenfoot.getRandomNumber(BLOCKS_HIGH);
+        } while (!(theGrid[x][y] instanceof RoomBlock)); // must be a room
+
+        Enemy enemy = new Enemy(player);
+        addObject(enemy, getXCoordinate(x), getYCoordinate(y));
     }
 
     /**
@@ -110,6 +127,7 @@ public class MyWorld extends World
         }
         buildLighting();
         addObject(player, 30, 40);
+        adjustLighting();
     }
 
     /**
@@ -122,7 +140,7 @@ public class MyWorld extends World
         //calculates number of horizontal and vertical squares needed to fill the world, +1 for overflow
         int numOfHorizontalSquares = getWidth() / lightingSquare.getImage().getWidth() +1;
         int numOfVerticalSquares = getHeight() / lightingSquare.getImage().getHeight() +1;
-        
+
         //starting place to spawn shaders
         int xPos = 0 + lightingSquare.getImage().getWidth()/2;
         int yPos = 0 + lightingSquare.getImage().getHeight()/2;
@@ -134,19 +152,28 @@ public class MyWorld extends World
         for(int i=0; i<numOfVerticalSquares; i++){
             for(int y=0; y<numOfHorizontalSquares; y++){
                 Lighting shader = new Lighting();
-                shaders[i][y] = shader;
-                addObject(shaders[i][y], xPos, yPos);
+                allShaders.add(shader);
+                addObject(shader, xPos, yPos);
                 xPos += lightingSquare.getImage().getWidth();
             }
             yPos += lightingSquare.getImage().getHeight();
             xPos = 0 + lightingSquare.getImage().getWidth()/2; //reset xPos for next row
         }
     }
-    
+
     /**
      * Change transparency of shaders that are near the player
      */
     public void adjustLighting(){
+        //reset all shaders to full darkness
+        for (Lighting s : allShaders) {
+            s.getImage().setTransparency(255);
+        }
+
+        shaders1 = player.getFurtherShaders();
+        for(Lighting s:shaders1){
+            s.getImage().setTransparency(90);
+        }
         shaders1 = player.getNearbyShaders();
         for(Lighting s:shaders1){
             s.getImage().setTransparency(50);
@@ -353,6 +380,11 @@ public class MyWorld extends World
 
     public static int getYCell(int coordinate){
         return (coordinate - Y_OFFSET) % BLOCK_SIZE;
+    }
+
+    // Getter
+    public Block[][] getGrid() {
+        return theGrid;
     }
 
 }
