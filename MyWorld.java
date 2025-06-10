@@ -86,14 +86,7 @@ public class MyWorld extends World
         // Generate the maze, unless we are in demo mode, in which case
         // we will wait until the started () method (when the user clicks run)
         if (!DEMO_ALGORITHM)
-<<<<<<< Updated upstream
             init(); 
-        
-        player = new Player();
-        addObject(player, 78, 58);
-=======
-            init();
-
         spawn();
     }
     public void spawn(){
@@ -101,8 +94,6 @@ public class MyWorld extends World
         
         player = new Player();
         addObject(player, getXCoordinate(1), getYCoordinate(1));
->>>>>>> Stashed changes
-        
         spawnEnemy();
     }
     
@@ -117,11 +108,7 @@ public class MyWorld extends World
         Enemy enemy = new Enemy(player);
         addObject(enemy, getXCoordinate(x), getYCoordinate(y));
     }
-<<<<<<< Updated upstream
 
-=======
-    
->>>>>>> Stashed changes
     /**
      * Called when Greenfoot's Run button is pressed. Used to start the init() method if the
      * DEMO is turned on because Greenfoot won't repaint() during World construction.
