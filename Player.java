@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.ArrayList;
 
 /**
  * Write a description of class Player here.
@@ -82,5 +83,14 @@ public class Player extends Actor
         if(isTouching(EndBlock.class)) {
             Greenfoot.setWorld(new MyWorld());
         }
+    }
+    
+    public ArrayList<Lighting> getNearbyShaders(){
+        //return arraylist of surrounding shaders within a certain radius
+        return (ArrayList<Lighting>)getObjectsInRange(40, Lighting.class);
+    }
+    public ArrayList<Lighting> getFurtherShaders(){
+        //return arraylist of surrounding shaders within a certain radius
+        return (ArrayList<Lighting>)getObjectsInRange(90, Lighting.class);
     }
 }

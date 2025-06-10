@@ -67,8 +67,12 @@ public class MyWorld extends World
 
     // Class Objects and Variables
     private Block[][] theGrid;
-    
-    private Player player;
+    private Lighting[][] shaders;
+    private ArrayList<Lighting> allShaders = new ArrayList<Lighting>();
+    //arraylist of shaders within a certain radius of player
+    private ArrayList<Lighting> shaders1;
+
+    private Player player = new Player();
 
     /**
      * Constructor for objects of class Maze.
@@ -92,23 +96,47 @@ public class MyWorld extends World
     public void spawn(){
         spawnCoins();
             init(); 
-        
-        Player player = new Player();
-        addObject(player, getXCoordinate(1), getYCoordinate(1));
-        
+
+        //Play background music
+        Sounds.getInstance().playBackgroundMusicLoop();
+        Sounds.getInstance().pauseBackgroundMusic();
+            
+        addObject(player, 78, 58);
+        buildLighting();
+        adjustLighting();
+        //addObject(player, getXCoordinate(1), getYCoordinate(1));
         spawnEnemy();
     }
-    
-    
+
     public void spawnEnemy() {
         int x, y;
         do {
             x = Greenfoot.getRandomNumber(BLOCKS_WIDE);
             y = Greenfoot.getRandomNumber(BLOCKS_HIGH);
         } while (!(theGrid[x][y] instanceof RoomBlock)); // must be a room
-    
+
         Enemy enemy = new Enemy(player);
         addObject(enemy, getXCoordinate(x), getYCoordinate(y));
+    }
+    /**
+     * Act method for the world
+     */
+    public void act(){
+        adjustLighting();
+        playSoundEffects();
+    }
+
+    public void playSoundEffects(){
+        //random sounds that will play
+        int randNum = Greenfoot.getRandomNumber(1000);
+        if(randNum==0){
+            Sounds.getInstance().playSounds(Sounds.HORROR_SWISH);
+        }
+        //rarer sounds
+        randNum = Greenfoot.getRandomNumber(5000);
+        if(randNum==1){
+            Sounds.getInstance().playSounds(Sounds.SCREAM);
+        }
     }
     /**
      * Called when Greenfoot's Run button is pressed. Used to start the init() method if the
@@ -118,6 +146,61 @@ public class MyWorld extends World
         // if demo mode is enabled, don't initialize the map until the Run button is clicked
         if (DEMO_ALGORITHM){
             init();
+        }
+        Sounds.getInstance().playBackgroundMusicLoop();
+    }
+
+    public void stopped(){
+        Sounds.getInstance().pauseBackgroundMusic();
+    }
+
+    /**
+     * Uses shaders to build a grid of dark lighting, with shaders around the player getting increasingly lighter
+     */
+    public void buildLighting(){
+
+        Lighting lightingSquare = new Lighting();
+
+        //calculates number of horizontal and vertical squares needed to fill the world, +1 for overflow
+        int numOfHorizontalSquares = getWidth() / lightingSquare.getImage().getWidth() +1;
+        int numOfVerticalSquares = getHeight() / lightingSquare.getImage().getHeight() +1;
+
+        //starting place to spawn shaders
+        int xPos = 0 + lightingSquare.getImage().getWidth()/2;
+        int yPos = 0 + lightingSquare.getImage().getHeight()/2;
+
+        //2d array holding shaders
+        shaders = new Lighting[numOfVerticalSquares][numOfHorizontalSquares];
+
+        //fills up the 2d array with shaders
+        for(int i=0; i<numOfVerticalSquares; i++){
+            for(int y=0; y<numOfHorizontalSquares; y++){
+                Lighting shader = new Lighting();
+                allShaders.add(shader);
+                addObject(shader, xPos, yPos);
+                xPos += lightingSquare.getImage().getWidth();
+            }
+            yPos += lightingSquare.getImage().getHeight();
+            xPos = 0 + lightingSquare.getImage().getWidth()/2; //reset xPos for next row
+        }
+    }
+
+    /**
+     * Change transparency of shaders that are near the player
+     */
+    public void adjustLighting(){
+        //reset all shaders to full darkness
+        for (Lighting s : allShaders) {
+            s.getImage().setTransparency(255);
+        }
+
+        shaders1 = player.getFurtherShaders();
+        for(Lighting s:shaders1){
+            s.getImage().setTransparency(90);
+        }
+        shaders1 = player.getNearbyShaders();
+        for(Lighting s:shaders1){
+            s.getImage().setTransparency(50);
         }
     }
 
@@ -138,7 +221,6 @@ public class MyWorld extends World
             startY++;
         }
         prims(startX, startY);
-        /*
         // Time generation time
         long startTime = System.nanoTime();
         // Run the generation algorithm
@@ -147,10 +229,10 @@ public class MyWorld extends World
             return;
         }
         long duration = System.nanoTime() - startTime;
-        
+
         // Report generation time if desired
         // System.out.println("Generated a Maze size " + BLOCKS_WIDE + " x " + BLOCKS_HIGH + " in " + (duration/1000000.0) + " ms.");
-*/
+
         // Set start and end blocks
         ((RoomBlock)theGrid[1][1]).setStartBlock();
         // Set end block
@@ -179,7 +261,7 @@ public class MyWorld extends World
                 // Put a unmovable Post on every edge square as well as every every (even, even) square
                 if (x == 0 || y == 0 || x == BLOCKS_WIDE - 1 || y == BLOCKS_HIGH - 1 || (y % 2 == 0 && x % 2 == 0)){
                     b = new PostBlock(x, y);
-                    
+
                 } else if (y % 2 == 1 && x % 2 == 1){ // where y and x are both odd, make a room
                     b = new RoomBlock(x, y);
                 }
@@ -346,13 +428,11 @@ public class MyWorld extends World
     public static int getYCell(int coordinate){
         return (coordinate - Y_OFFSET) / BLOCK_SIZE;
     }
-    
+
     // Getter
     public Block[][] getGrid() {
-    return theGrid;
+        return theGrid;
     }
-    
-
 
     private void spawnCoins ()
     {
