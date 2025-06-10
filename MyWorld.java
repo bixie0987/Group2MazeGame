@@ -92,6 +92,9 @@ public class MyWorld extends World
         if (!DEMO_ALGORITHM)
             init(); 
 
+        //Play background music
+        Sounds.getInstance().playBackgroundMusicLoop();
+        Sounds.getInstance().pauseBackgroundMusic();
             
         addObject(player, 78, 58);
         buildLighting();
@@ -116,8 +119,21 @@ public class MyWorld extends World
      */
     public void act(){
         adjustLighting();
+        playSoundEffects();
     }
 
+    public void playSoundEffects(){
+        //random sounds that will play
+        int randNum = Greenfoot.getRandomNumber(1000);
+        if(randNum==0){
+            Sounds.getInstance().playSounds(Sounds.HORROR_SWISH);
+        }
+        //rarer sounds
+        randNum = Greenfoot.getRandomNumber(5000);
+        if(randNum==1){
+            Sounds.getInstance().playSounds(Sounds.SCREAM);
+        }
+    }
     /**
      * Called when Greenfoot's Run button is pressed. Used to start the init() method if the
      * DEMO is turned on because Greenfoot won't repaint() during World construction.
@@ -127,7 +143,11 @@ public class MyWorld extends World
         if (DEMO_ALGORITHM){
             init();
         }
-        
+        Sounds.getInstance().playBackgroundMusicLoop();
+    }
+
+    public void stopped(){
+        Sounds.getInstance().pauseBackgroundMusic();
     }
 
     /**
