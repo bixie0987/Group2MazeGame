@@ -361,7 +361,7 @@ public class MyWorld extends World
             int maxX = 1679;  // must be odd
             int randomX = Greenfoot.getRandomNumber((maxX + 1) / 2) * 2 + 1;
             int maxY = 719;  // must be odd
-            int randomY = Greenfoot.getRandomNumber((maxX + 1) / 2) * 2 + 1;
+            int randomY = Greenfoot.getRandomNumber((maxY + 1) / 2) * 2 + 1;
             addObject (new Coins(), randomX, randomY);
         }
     }
