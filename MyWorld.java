@@ -110,6 +110,8 @@ public class MyWorld extends World
         if(player.getEndBlockReached()) {
             Greenfoot.setWorld(new MyWorld());
         }
+        adjustLighting();
+        playSoundEffects();
     }
 
     public void spawnEnemy() {
@@ -121,14 +123,6 @@ public class MyWorld extends World
 
         Enemy enemy = new Enemy(player);
         addObject(enemy, getXCoordinate(x), getYCoordinate(y));
-    }
-    
-    /**
-     * Act method for the world
-     */
-    public void act(){
-        adjustLighting();
-        playSoundEffects();
     }
 
     public void playSoundEffects(){
@@ -237,7 +231,6 @@ public class MyWorld extends World
 
         // Report generation time if desired
         // System.out.println("Generated a Maze size " + BLOCKS_WIDE + " x " + BLOCKS_HIGH + " in " + (duration/1000000.0) + " ms.")
-        */
 
         // Set start and end blocks
         ((RoomBlock)theGrid[1][1]).setStartBlock();
