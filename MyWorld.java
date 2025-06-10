@@ -91,17 +91,15 @@ public class MyWorld extends World
         // we will wait until the started () method (when the user clicks run)
         if (!DEMO_ALGORITHM)
             init();
+
         spawn();
     }
     public void spawn(){
         spawnCoins();
-            init(); 
+        
+        player = new Player();
+        addObject(player, getXCoordinate(1), getYCoordinate(1));
 
-        //Play background music
-        Sounds.getInstance().playBackgroundMusicLoop();
-        Sounds.getInstance().pauseBackgroundMusic();
-            
-        addObject(player, 78, 58);
         buildLighting();
         adjustLighting();
         //addObject(player, getXCoordinate(1), getYCoordinate(1));
@@ -118,6 +116,7 @@ public class MyWorld extends World
         Enemy enemy = new Enemy(player);
         addObject(enemy, getXCoordinate(x), getYCoordinate(y));
     }
+    
     /**
      * Act method for the world
      */

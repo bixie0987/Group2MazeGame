@@ -93,4 +93,14 @@ public class Player extends Actor
         //return arraylist of surrounding shaders within a certain radius
         return (ArrayList<Lighting>)getObjectsInRange(90, Lighting.class);
     }
+    
+    // getter
+    public int getGridX() {
+        return gridX;
+    }
+    
+    // getter
+    public int getGridY() {
+        return gridY;
+    }
 }
