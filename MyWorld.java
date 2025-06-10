@@ -105,6 +105,19 @@ public class MyWorld extends World
         //addObject(player, getXCoordinate(1), getYCoordinate(1));
         spawnEnemy();
     }
+
+    private void spawnCoins()
+    {
+        int numCoins = 100;
+        for(int i = 0; i<numCoins; i++){
+            int x = Greenfoot.getRandomNumber(1200);
+            int y = Greenfoot.getRandomNumber(800);
+            if(theGrid[x][y] instanceof RoomBlock){
+                addObject (new Coins(), x, y);
+            }
+        }
+    }
+
     public void act() {
         // Generate new maze (aka re-instantiate MyWorld) if Player reached EndBlock
         if(player.getEndBlockReached()) {
@@ -137,6 +150,7 @@ public class MyWorld extends World
             Sounds.getInstance().playSounds(Sounds.SCREAM);
         }
     }
+
     /**
      * Called when Greenfoot's Run button is pressed. Used to start the init() method if the
      * DEMO is turned on because Greenfoot won't repaint() during World construction.
