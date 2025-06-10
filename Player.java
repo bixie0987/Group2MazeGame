@@ -77,5 +77,10 @@ public class Player extends Actor
         if (Greenfoot.isKeyDown("d")) {
             setLocation(getX() + speed, getY());
         }
+
+        // Generate new maze (aka re-instantiate MyWorld) if Player touches EndBlock
+        if(isTouching(EndBlock.class)) {
+            Greenfoot.setWorld(new MyWorld());
+        }
     }
 }
