@@ -55,8 +55,8 @@ public class MyWorld extends World
 {
     // Constants
     public static final int BLOCK_SIZE = 18;
-    public static final int BLOCKS_WIDE = 7; // must be odd
-    public static final int BLOCKS_HIGH = 7; // must be odd
+    public static final int BLOCKS_WIDE = 51; // must be odd
+    public static final int BLOCKS_HIGH = 41; // must be odd
     public static final int X_OFFSET = 60;
     public static final int Y_OFFSET = 40;
     public static final int MODE = 0;
@@ -110,10 +110,10 @@ public class MyWorld extends World
     {
         int numCoins = 100;
         for(int i = 0; i<numCoins; i++){
-            int x = Greenfoot.getRandomNumber(1200);
-            int y = Greenfoot.getRandomNumber(800);
+            int x = Greenfoot.getRandomNumber(BLOCKS_WIDE);
+            int y = Greenfoot.getRandomNumber(BLOCKS_HIGH);
             if(theGrid[x][y] instanceof RoomBlock){
-                addObject (new Coins(), x, y);
+                addObject (new Coins(), getXCoordinate(x), getYCoordinate(y));
             }
         }
     }
@@ -446,7 +446,7 @@ public class MyWorld extends World
     public Block[][] getGrid() {
         return theGrid;
     }
-
+    /*
     private void spawnCoins ()
     {
         int numCoins = 100;
@@ -458,4 +458,5 @@ public class MyWorld extends World
             addObject (new Coins(), randomX, randomY);
         }
     }
+    */
 }
