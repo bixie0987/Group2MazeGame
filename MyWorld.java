@@ -103,6 +103,12 @@ public class MyWorld extends World
         // Generate new maze (aka re-instantiate MyWorld) if Player reached EndBlock
         if(player.getEndBlockReached()) {
             GameManager.getInstance().onMazeComplete();
+            System.out.println("MyWorld called onMazeComplete() in GameManager");
+        }
+        
+        // TESTING - if pressed "tab," save game data.
+        if(Greenfoot.isKeyDown("tab")) {
+            PlayerData.getInstance().saveData();
         }
     }
     
