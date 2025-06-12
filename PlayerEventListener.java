@@ -1,5 +1,5 @@
 /**
- * Interface for all the 'listener' classes of maze completion - classes that want to be notified when player completes maze.
+ * Interface for all the 'listener' classes of player events (ex: when player completes maze, when player dies).
  * 
  * Used concept of event listening (learned from ChatGPT).
  * 
