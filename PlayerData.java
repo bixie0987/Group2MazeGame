@@ -32,10 +32,14 @@ public class PlayerData
     
     // Constructor is private - prevents direct instantiation, no one else can make a new constructor
     private PlayerData() {
-        // Create dataArray, set default values as 0
+        // Create dataArray, set default values for indices as 0 (this is in case save file is missing info)
         dataArray = new int[]{0, 0};
         // index 1: highScoreCoins
         // index 2: highScore
+        
+        // Set default values for variables (this is in case code is never run to set variables to their corresponding array index)
+        highScoreCoins = -1;
+        highScore = -1;
     }
     
     /**
