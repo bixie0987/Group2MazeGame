@@ -9,4 +9,6 @@
 public interface PlayerEventListener  
 {
     public void onMazeComplete();
+    
+    public void onPlayerDeath();
 }

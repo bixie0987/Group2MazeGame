@@ -51,7 +51,7 @@ public class GameManager implements PlayerEventListener
     }
     
     /**
-     * Runs when player reaches end of maze.
+     * Runs when player reaches end of maze. -> Generates new maze, modifies some stats
      * Overrides method in PlayerEventListener interface.
      */
     @Override
@@ -61,5 +61,14 @@ public class GameManager implements PlayerEventListener
         
         mazeNumber++;
         coinWorth++;
+    }
+    
+    /**
+     * Runs when player dies. -> Saves data
+     * Overrides method in PlayerEventListener interface.
+     */
+    @Override
+    public void onPlayerDeath() {
+        PlayerData.getInstance().saveData();
     }
 }
