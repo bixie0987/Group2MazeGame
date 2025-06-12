@@ -3,8 +3,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class Player here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Chin-En, Julia
+ * @version Jun 2025
  */
 public class Player extends Actor
 {
@@ -15,6 +15,8 @@ public class Player extends Actor
     // Create listener that 'listens' to notifs of player events - ex: player completed maze, player died
     // listener is instantiated in setter, to be called by another class ()
     private PlayerEventListener listener;
+    
+    private int health;
     
     public Player()
     {
@@ -41,6 +43,11 @@ public class Player extends Actor
             if(listener != null) {
                 listener.onMazeComplete();
             }
+        }
+        
+        // Check if Player is dead. If os, notify all listeners of player death, make them run onPlayerDeath()
+        if(health == 0) {
+            listener.onPlayerDeath();
         }
     }
     private void handleMovement() {
