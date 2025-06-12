@@ -12,7 +12,9 @@ public class Player extends Actor
     private int gridX;
     private int gridY;
     
-    private boolean endBlockReached; // true if player has reached endBlock
+    // Create listener that 'listens' to notifs of player events - ex: player completed maze, player died
+    // listener is instantiated in setter, to be called by another class ()
+    private PlayerEventListener listener;
     
     public Player()
     {
@@ -22,6 +24,10 @@ public class Player extends Actor
         setImage(image);
     }
     
+    public void setEventListener(PlayerEventListener listener) {
+        this.listener = listener;
+    }
+    
     @Override
     protected void addedToWorld(World world) {
         this.gridX = MyWorld.getXCell(getX());
@@ -29,6 +35,13 @@ public class Player extends Actor
     }
     public void act() {
         handleMovement();
+        
+        // Check if Player touches EndBlock. If so, notify all listeners of maze completion, make them run onMazeComplete()
+        if(isTouching(EndBlock.class)) {
+            if(listener != null) {
+                listener.onMazeComplete();
+            }
+        }
     }
     private void handleMovement() {
         String key = Greenfoot.getKey();
@@ -62,11 +75,6 @@ public class Player extends Actor
             
             setLocation(MyWorld.getXCoordinate(gridX), MyWorld.getYCoordinate(gridY));
         }
-        
-        // Check if Player touches EndBlock (MyWorld will generate new maze if so)
-        if(isTouching(EndBlock.class)) {
-            endBlockReached = true;
-        }
     }
     public void checkKeys() {
         int speed = 1;
@@ -82,9 +90,5 @@ public class Player extends Actor
         if (Greenfoot.isKeyDown("d")) {
             setLocation(getX() + speed, getY());
         }
-    }
-    
-    public boolean getEndBlockReached() {
-        return endBlockReached;
     }
 }

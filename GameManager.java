@@ -11,7 +11,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author Julia
  * @version Jun 2025
  */
-public class GameManager
+public class GameManager implements PlayerEventListener
 {
     // Private static instance (GameManager creates its own instance, other classes use getter to access this instance)
     private static GameManager instance;
@@ -29,6 +29,8 @@ public class GameManager
         coinWorth = 1;
         score = 0;
         mazeNumber = 0;
+        
+        System.out.println("GameManager constructor"); // TESTING
         
         // Load player data (this line is currently the 1st time that PlayerData is called, so this is where PlayerData instance is created.)
         // (Later, when working on UI, if high score is displayed at the BEGINNING, then move this line there)
@@ -50,7 +52,9 @@ public class GameManager
     
     /**
      * Runs when player reaches end of maze.
+     * Overrides method in PlayerEventListener interface.
      */
+    @Override
     public void onMazeComplete() {
         // Generate new maze
         Greenfoot.setWorld(new MyWorld());

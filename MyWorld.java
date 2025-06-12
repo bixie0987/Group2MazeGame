@@ -68,6 +68,7 @@ public class MyWorld extends World
     // Class Objects and Variables
     private Block[][] theGrid;
     
+    // Create Player
     private Player player;
 
     /**
@@ -93,18 +94,15 @@ public class MyWorld extends World
         spawnCoins();
             init(); 
         
+        // Create Player, set its even listeners
         player = new Player();
         addObject(player, getXCoordinate(1), getYCoordinate(1));
+        player.setEventListener(GameManager.getInstance());
         
         spawnEnemy();
     }
     
     public void act() {
-        // Generate new maze (aka re-instantiate MyWorld) if Player reached EndBlock
-        if(player.getEndBlockReached()) {
-            GameManager.getInstance().onMazeComplete();
-        }
-        
         // TESTING - if pressed "tab," save game data.
         if(Greenfoot.isKeyDown("tab")) {
             PlayerData.getInstance().saveData();
