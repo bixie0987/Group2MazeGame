@@ -14,7 +14,7 @@ public class Coins extends Actor
      */
     private GreenfootImage coin;
     public Coins(){
-        //set image for suppliers
+        //set image for coins;
         coin = new GreenfootImage("coin.png");
         setImage(coin);
     }
