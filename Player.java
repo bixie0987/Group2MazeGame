@@ -101,11 +101,13 @@ public class Player extends Actor
             Greenfoot.setWorld(new MyWorld());
         }
     }
-    /*
+    
+    /**
     public boolean getEndBlockReached() {
         return endBlockReached;
     
     }
+    **/
     
     /**
      *  public boolean getEndBlockReached() {
