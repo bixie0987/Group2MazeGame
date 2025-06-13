@@ -8,8 +8,7 @@ import java.util.ArrayList;
  * @version Jun 2025
  */
 public class Player extends Actor
-{
-    
+{   
     private int gridX;
     private int gridY;
     
@@ -17,8 +16,7 @@ public class Player extends Actor
     // listener is instantiated in setter, to be called by another class ()
     private PlayerEventListener listener;
     
-    private int health;
-    
+    private int health = 100;
     public Player()
     {
         GreenfootImage image = new GreenfootImage(MyWorld.BLOCK_SIZE, MyWorld.BLOCK_SIZE);
@@ -103,7 +101,7 @@ public class Player extends Actor
             Greenfoot.setWorld(new MyWorld());
         }
     }
-    
+    /*
     public boolean getEndBlockReached() {
         return endBlockReached;
     
@@ -113,7 +111,6 @@ public class Player extends Actor
      *  public boolean getEndBlockReached() {
         return endBlockReached; }
      */
-    
     public ArrayList<Lighting> getNearbyShaders(){
         //return arraylist of surrounding shaders within a certain radius
         return (ArrayList<Lighting>)getObjectsInRange(40, Lighting.class);
