@@ -55,8 +55,8 @@ public class MyWorld extends World
 {
     // Constants
     public static final int BLOCK_SIZE = 18;
-    public static final int BLOCKS_WIDE = 7; // must be odd
-    public static final int BLOCKS_HIGH = 7; // must be odd
+    public static final int BLOCKS_WIDE = 51; // must be odd
+    public static final int BLOCKS_HIGH = 41; // must be odd
     public static final int X_OFFSET = 60;
     public static final int Y_OFFSET = 40;
     public static final int MODE = 0;
