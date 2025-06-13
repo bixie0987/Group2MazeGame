@@ -67,12 +67,15 @@ public class MyWorld extends World
 
     // Class Objects and Variables
     private Block[][] theGrid;
+    
+    // Create Player
+    private Player player;
+    
     private Lighting[][] shaders;
     private ArrayList<Lighting> allShaders = new ArrayList<Lighting>();
     //arraylist of shaders within a certain radius of player
     private ArrayList<Lighting> shaders1;
 
-    private Player player = new Player();
 
     /**
      * Constructor for objects of class Maze.
@@ -97,13 +100,36 @@ public class MyWorld extends World
     public void spawn(){
         spawnCoins();
         
+        // Create Player, set its even listeners
         player = new Player();
         addObject(player, getXCoordinate(1), getYCoordinate(1));
+        player.setEventListener(GameManager.getInstance());
 
         buildLighting();
         adjustLighting();
-        //addObject(player, getXCoordinate(1), getYCoordinate(1));
+        
         spawnEnemy();
+    }
+
+    private void spawnCoins()
+    {
+        int numCoins = 100;
+        for(int i = 0; i<numCoins; i++){
+            int x = Greenfoot.getRandomNumber(BLOCKS_WIDE);
+            int y = Greenfoot.getRandomNumber(BLOCKS_HIGH);
+            if(theGrid[x][y] instanceof RoomBlock){
+                addObject (new Coins(), getXCoordinate(x), getYCoordinate(y));
+            }
+        }
+    }
+
+    public void act() {
+        // TESTING - if pressed "tab," save game data.
+        if(Greenfoot.isKeyDown("tab")) {
+            PlayerData.getInstance().saveData();
+        }
+        adjustLighting();
+        playSoundEffects();
     }
 
     public void spawnEnemy() {
@@ -115,14 +141,6 @@ public class MyWorld extends World
 
         Enemy enemy = new Enemy(player);
         addObject(enemy, getXCoordinate(x), getYCoordinate(y));
-    }
-    
-    /**
-     * Act method for the world
-     */
-    public void act(){
-        adjustLighting();
-        playSoundEffects();
     }
 
     public void playSoundEffects(){
@@ -137,6 +155,7 @@ public class MyWorld extends World
             Sounds.getInstance().playSounds(Sounds.SCREAM);
         }
     }
+
     /**
      * Called when Greenfoot's Run button is pressed. Used to start the init() method if the
      * DEMO is turned on because Greenfoot won't repaint() during World construction.
@@ -230,7 +249,7 @@ public class MyWorld extends World
         long duration = System.nanoTime() - startTime;
 
         // Report generation time if desired
-        // System.out.println("Generated a Maze size " + BLOCKS_WIDE + " x " + BLOCKS_HIGH + " in " + (duration/1000000.0) + " ms.");
+        // System.out.println("Generated a Maze size " + BLOCKS_WIDE + " x " + BLOCKS_HIGH + " in " + (duration/1000000.0) + " ms.")
 
         // Set start and end blocks
         ((RoomBlock)theGrid[1][1]).setStartBlock();
@@ -432,7 +451,7 @@ public class MyWorld extends World
     public Block[][] getGrid() {
         return theGrid;
     }
-
+    /*
     private void spawnCoins ()
     {
         int numCoins = 100;
@@ -440,8 +459,9 @@ public class MyWorld extends World
             int maxX = 1679;  // must be odd
             int randomX = Greenfoot.getRandomNumber((maxX + 1) / 2) * 2 + 1;
             int maxY = 719;  // must be odd
-            int randomY = Greenfoot.getRandomNumber((maxX + 1) / 2) * 2 + 1;
+            int randomY = Greenfoot.getRandomNumber((maxY + 1) / 2) * 2 + 1;
             addObject (new Coins(), randomX, randomY);
         }
     }
+    */
 }

@@ -4,23 +4,31 @@ import java.util.ArrayList;
 /**
  * Write a description of class Player here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Chin-En, Julia
+ * @version Jun 2025
  */
 public class Player extends Actor
 {
-    /**
-     * Act - do whatever the Player wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
+    
     private int gridX;
     private int gridY;
+    
+    // Create listener that 'listens' to notifs of player events - ex: player completed maze, player died
+    // listener is instantiated in setter, to be called by another class ()
+    private PlayerEventListener listener;
+    
+    private int health;
+    
     public Player()
     {
         GreenfootImage image = new GreenfootImage(MyWorld.BLOCK_SIZE, MyWorld.BLOCK_SIZE);
         image.setColor(Color.BLUE);
         image.fill();
         setImage(image);
+    }
+    
+    public void setEventListener(PlayerEventListener listener) {
+        this.listener = listener;
     }
     
     @Override
@@ -30,6 +38,18 @@ public class Player extends Actor
     }
     public void act() {
         handleMovement();
+        
+        // Check if Player touches EndBlock. If so, notify all listeners of maze completion, make them run onMazeComplete()
+        if(isTouching(EndBlock.class)) {
+            if(listener != null) {
+                listener.onMazeComplete();
+            }
+        }
+        
+        // Check if Player is dead. If os, notify all listeners of player death, make them run onPlayerDeath()
+        if(health == 0) {
+            listener.onPlayerDeath();
+        }
     }
     private void handleMovement() {
         String key = Greenfoot.getKey();
@@ -78,21 +98,21 @@ public class Player extends Actor
         if (Greenfoot.isKeyDown("d")) {
             setLocation(getX() + speed, getY());
         }
-<<<<<<< Updated upstream
-
         // Generate new maze (aka re-instantiate MyWorld) if Player touches EndBlock
         if(isTouching(EndBlock.class)) {
             Greenfoot.setWorld(new MyWorld());
         }
     }
-=======
+    
+    public boolean getEndBlockReached() {
+        return endBlockReached;
+    
     }
     
     /**
      *  public boolean getEndBlockReached() {
         return endBlockReached; }
      */
->>>>>>> Stashed changes
     
     public ArrayList<Lighting> getNearbyShaders(){
         //return arraylist of surrounding shaders within a certain radius
