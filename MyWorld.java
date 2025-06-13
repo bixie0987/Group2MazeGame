@@ -109,8 +109,8 @@ public class MyWorld extends World
     {
         int numCoins = 100;
         for(int i = 0; i<numCoins; i++){
-            int x = Greenfoot.getRandomNumber(1200);
-            int y = Greenfoot.getRandomNumber(800);
+            int x = Greenfoot.getRandomNumber(BLOCKS_WIDE);
+            int y = Greenfoot.getRandomNumber(BLOCKS_HIGH);
             if(theGrid[x][y] instanceof RoomBlock){
                 addObject (new Coins(), x, y);
             }
