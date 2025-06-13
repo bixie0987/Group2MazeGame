@@ -15,12 +15,18 @@ public class Player extends Actor
      */
     private int gridX;
     private int gridY;
-    public Player()
-    {
-        GreenfootImage image = new GreenfootImage(MyWorld.BLOCK_SIZE, MyWorld.BLOCK_SIZE);
-        image.setColor(Color.BLUE);
-        image.fill();
-        setImage(image);
+    
+    //variables for animation of player movement
+    private int frame=0;
+    private int actsPassed = 0;
+    //image of all walking frames
+    private GreenfootImage spriteSheet = new GreenfootImage("walk.png");
+    private Direction direction;
+    private Animation animation;
+    public Player(){
+        direction = Direction.RIGHT;
+        animation = AnimationManager.createAnimation(spriteSheet,1,4,9,64, 64);
+        setImage(animation.getOneImage(direction, frame));
     }
     
     @Override
@@ -30,6 +36,10 @@ public class Player extends Actor
     }
     public void act() {
         handleMovement();
+        setImage(animation.getOneImage(direction,frame));
+        if(frame==8){
+            frame=0;
+        }
     }
     private void handleMovement() {
         String key = Greenfoot.getKey();
@@ -43,15 +53,23 @@ public class Player extends Actor
         switch (key) {
             case "w":
                 targetGridY--;
+                frame++;
+                direction = Direction.UP;
                 break;
             case "s":
                 targetGridY++;
+                frame++;
+                direction = Direction.DOWN;
                 break;
             case "a":
                 targetGridX--;
+                frame++;
+                direction = Direction.LEFT;
                 break;
             case "d":
                 targetGridX++;
+                frame++;
+                direction = Direction.RIGHT;
                 break;
             default:
                 return;

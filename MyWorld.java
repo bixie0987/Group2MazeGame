@@ -54,7 +54,7 @@ import java.util.ArrayList;
 public class MyWorld extends World
 {
     // Constants
-    public static final int BLOCK_SIZE = 18;
+    public static final int BLOCK_SIZE = 30;
     public static final int BLOCKS_WIDE = 51; // must be odd
     public static final int BLOCKS_HIGH = 41; // must be odd
     public static final int X_OFFSET = 60;
@@ -101,7 +101,7 @@ public class MyWorld extends World
         Sounds.getInstance().playBackgroundMusicLoop();
         Sounds.getInstance().pauseBackgroundMusic();
             
-        addObject(player, 78, 58);
+        addObject(player,getXCoordinate(1),getYCoordinate(1));
         buildLighting();
         adjustLighting();
         //addObject(player, getXCoordinate(1), getYCoordinate(1));
@@ -434,6 +434,7 @@ public class MyWorld extends World
         return theGrid;
     }
 
+    //remove
     private void spawnCoins ()
     {
         int numCoins = 100;
