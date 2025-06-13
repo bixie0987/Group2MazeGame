@@ -55,8 +55,8 @@ public class MyWorld extends World
 {
     // Constants
     public static final int BLOCK_SIZE = 18;
-    public static final int BLOCKS_WIDE = 7; // must be odd
-    public static final int BLOCKS_HIGH = 7; // must be odd
+    public static final int BLOCKS_WIDE = 51; // must be odd
+    public static final int BLOCKS_HIGH = 41; // must be odd
     public static final int X_OFFSET = 60;
     public static final int Y_OFFSET = 40;
     public static final int MODE = 0;
@@ -67,12 +67,15 @@ public class MyWorld extends World
 
     // Class Objects and Variables
     private Block[][] theGrid;
+    
+    // Create Player
+    private Player player;
+    
     private Lighting[][] shaders;
     private ArrayList<Lighting> allShaders = new ArrayList<Lighting>();
     //arraylist of shaders within a certain radius of player
     private ArrayList<Lighting> shaders1;
 
-    private Player player = new Player();
 
     /**
      * Constructor for objects of class Maze.
@@ -97,12 +100,14 @@ public class MyWorld extends World
     public void spawn(){
         spawnCoins();
         
+        // Create Player, set its even listeners
         player = new Player();
         addObject(player, getXCoordinate(1), getYCoordinate(1));
+        player.setEventListener(GameManager.getInstance());
 
         buildLighting();
         adjustLighting();
-        //addObject(player, getXCoordinate(1), getYCoordinate(1));
+        
         spawnEnemy();
     }
     private void spawnCoins()
@@ -112,14 +117,14 @@ public class MyWorld extends World
             int x = Greenfoot.getRandomNumber(BLOCKS_WIDE);
             int y = Greenfoot.getRandomNumber(BLOCKS_HIGH);
             if(theGrid[x][y] instanceof RoomBlock){
-                addObject (new Coins(), x, y);
+                addObject (new Coins(), getXCoordinate(x), getYCoordinate(y));
             }
         }
     }
     public void act() {
-        // Generate new maze (aka re-instantiate MyWorld) if Player reached EndBlock
-        if(player.getEndBlockReached()) {
-            Greenfoot.setWorld(new MyWorld());
+        // TESTING - if pressed "tab," save game data.
+        if(Greenfoot.isKeyDown("tab")) {
+            PlayerData.getInstance().saveData();
         }
         adjustLighting();
         playSoundEffects();
@@ -146,6 +151,7 @@ public class MyWorld extends World
             Sounds.getInstance().playSounds(Sounds.SCREAM);
         }
     }
+
     /**
      * Called when Greenfoot's Run button is pressed. Used to start the init() method if the
      * DEMO is turned on because Greenfoot won't repaint() during World construction.
@@ -241,6 +247,7 @@ public class MyWorld extends World
         // Report generation time if desired
         // System.out.println("Generated a Maze size " + BLOCKS_WIDE + " x " + BLOCKS_HIGH + " in " + (duration/1000000.0) + " ms.");
         // System.out.println("Generated a Maze size " + BLOCKS_WIDE + " x " + BLOCKS_HIGH + " in " + (duration/1000000.0) + " ms.")
+
         // Set start and end blocks
         ((RoomBlock)theGrid[1][1]).setStartBlock();
         // Set end block
