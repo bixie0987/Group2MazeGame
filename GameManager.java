@@ -1,10 +1,74 @@
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+
 /**
- * Manages game overall - transitioning to new levels, number of coins
+ * Manages game overall, oversees game flow.
+ * Useful bc maze will reload (therefore MyWorld is reinstantiated for every maze), but this doesn't!
+ * I tried to make this a singleton! (aka only one instance of GameManager exists, global access to it)
+ * 
+ * Sources I used to learn this:
+ * ChatGPT, GeeksForGeeks (https://www.geeksforgeeks.org/singleton-class-java/)
  * 
  * @author Julia
  * @version Jun 2025
  */
-public class GameManager
+public class GameManager implements PlayerEventListener
 {
+    // Private static instance (GameManager creates its own instance, other classes use getter to access this instance)
+    private static GameManager instance;
     
+    // Variables are public
+    public int coins; // convert into score
+    public int coinWorth; // value of each coin, greater value converts to greater score; increases as mazeNumber increases
+    public int score;
+    public int mazeNumber;
+    
+    // Constructor is private - prevents direct instantiation, no one else can make a new constructor
+    private GameManager() {
+        // Set initial variable values
+        coins = 0;
+        coinWorth = 1;
+        score = 0;
+        mazeNumber = 0;
+        
+        System.out.println("GameManager constructor"); // TESTING
+        
+        // Load player data (this line is currently the 1st time that PlayerData is called, so this is where PlayerData instance is created.)
+        // (Later, when working on UI, if high score is displayed at the BEGINNING, then move this line there)
+        // (... since GameManager is currently first called/created by MyWorld at the end of the first maze)
+        PlayerData.getInstance().loadData(); // MOVE THIS LATER TO UI CLASS!!!!!!!11
+    }
+    
+    /**
+     * Public getter for one-and-only instance
+     * Other classes access GameManager's variables/methods through this getter
+     */
+    public static GameManager getInstance() {
+        if(instance == null) {
+            instance = new GameManager(); // 'lazy instantiation' - create instance only when getInstance() is called (when it's needed!)
+        }
+        
+        return instance;
+    }
+    
+    /**
+     * Runs when player reaches end of maze. -> Generates new maze, modifies some stats
+     * Overrides method in PlayerEventListener interface.
+     */
+    @Override
+    public void onMazeComplete() {
+        // Generate new maze
+        Greenfoot.setWorld(new MyWorld());
+        
+        mazeNumber++;
+        coinWorth++;
+    }
+    
+    /**
+     * Runs when player dies. -> Saves data
+     * Overrides method in PlayerEventListener interface.
+     */
+    @Override
+    public void onPlayerDeath() {
+        PlayerData.getInstance().saveData();
+    }
 }

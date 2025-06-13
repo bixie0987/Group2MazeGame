@@ -67,12 +67,15 @@ public class MyWorld extends World
 
     // Class Objects and Variables
     private Block[][] theGrid;
+    
+    // Create Player
+    private Player player;
+    
     private Lighting[][] shaders;
     private ArrayList<Lighting> allShaders = new ArrayList<Lighting>();
     //arraylist of shaders within a certain radius of player
     private ArrayList<Lighting> shaders1;
 
-    private Player player = new Player();
 
     /**
      * Constructor for objects of class Maze.
@@ -97,12 +100,14 @@ public class MyWorld extends World
     public void spawn(){
         spawnCoins();
         
+        // Create Player, set its even listeners
         player = new Player();
         addObject(player, getXCoordinate(1), getYCoordinate(1));
+        player.setEventListener(GameManager.getInstance());
 
         buildLighting();
         adjustLighting();
-        //addObject(player, getXCoordinate(1), getYCoordinate(1));
+        
         spawnEnemy();
     }
 
@@ -119,9 +124,9 @@ public class MyWorld extends World
     }
 
     public void act() {
-        // Generate new maze (aka re-instantiate MyWorld) if Player reached EndBlock
-        if(player.getEndBlockReached()) {
-            Greenfoot.setWorld(new MyWorld());
+        // TESTING - if pressed "tab," save game data.
+        if(Greenfoot.isKeyDown("tab")) {
+            PlayerData.getInstance().saveData();
         }
         adjustLighting();
         playSoundEffects();
