@@ -13,6 +13,9 @@ public class Enemy extends Actor
     private MyWorld world;
     private Player player;
     private int speed = 18; // move 1 block at a time
+    private int shootingRange = 2;
+    private int shootCooldown = 0;
+
 
     public Enemy(Player p) {
         this.player = p;
@@ -35,12 +38,20 @@ public class Enemy extends Actor
         int targetGridX = player.getGridX();
         int targetGridY = player.getGridY();
 
-        int[] next = bfsToPlayer(currentX, currentY, targetGridX, targetGridY);
-        if (next != null) {
-            setLocation(next[0], next[1]);
+        int distance = Math.abs(currentX - targetGridX) + Math.abs(currentY - targetGridY);
+         if (distance <= shootingRange) {
+        // Within range → shoot
+        shootAtPlayer();
+        } else {
+            // Move toward player
+            int[] next = bfsToPlayer(currentX, currentY, targetGridX, targetGridY);
+            if (next != null) {
+                setLocation(next[0], next[1]);
+            }
         }
+    
     }
-
+    
     private int[] bfsToPlayer(int startGridX, int startGridY, int targetGridX, int targetGridY) {
         Queue<int[]> queue = new LinkedList<>();
         Set<String> visited = new HashSet<>();
@@ -91,5 +102,17 @@ public class Enemy extends Actor
         Block block = grid[gridX][gridY];
         return block.isPassable();
     }
+    
+    private void shootAtPlayer() {
+        if (shootCooldown == 0) {
+            // Spawn a Bullet object toward the player
+            Bullet bullet = new Bullet(getX(), getY(), player.getX(), player.getY());
+            getWorld().addObject(bullet, getX(), getY());
+            
+            shootCooldown = 50; // cooldown time in frames (adjust as needed)
+        } else {
+            shootCooldown--;
+        }
+}
 
 }
