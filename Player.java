@@ -84,11 +84,11 @@ public class Player extends Actor
             setLocation(getX() + speed, getY());
         }
     }
-    
+    /*
     public boolean getEndBlockReached() {
         return endBlockReached;
     }
-    
+    */
     public ArrayList<Lighting> getNearbyShaders(){
         //return arraylist of surrounding shaders within a certain radius
         return (ArrayList<Lighting>)getObjectsInRange(40, Lighting.class);
