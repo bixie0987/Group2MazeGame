@@ -69,7 +69,7 @@ public class MyWorld extends World
     private Block[][] theGrid;
     
     // Create Player
-    private Player player;
+    private Player player = new Player();
     
     private Lighting[][] shaders;
     private ArrayList<Lighting> allShaders = new ArrayList<Lighting>();
