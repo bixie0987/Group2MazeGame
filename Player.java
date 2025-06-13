@@ -78,12 +78,21 @@ public class Player extends Actor
         if (Greenfoot.isKeyDown("d")) {
             setLocation(getX() + speed, getY());
         }
+<<<<<<< Updated upstream
 
         // Generate new maze (aka re-instantiate MyWorld) if Player touches EndBlock
         if(isTouching(EndBlock.class)) {
             Greenfoot.setWorld(new MyWorld());
         }
     }
+=======
+    }
+    
+    /**
+     *  public boolean getEndBlockReached() {
+        return endBlockReached; }
+     */
+>>>>>>> Stashed changes
     
     public ArrayList<Lighting> getNearbyShaders(){
         //return arraylist of surrounding shaders within a certain radius
