@@ -44,5 +44,11 @@ public class StartScreen extends World
         if (playButton != null && playButton.getPressed()) {
             Greenfoot.setWorld(new MyWorld());
         }
+        if (scoreButton != null && scoreButton.getPressed()) {
+            Greenfoot.setWorld(new Scoreboard());
+        }
+        if (helpButton != null && helpButton.getPressed()) {
+            Greenfoot.setWorld(new Instruction());
+        }
     }
 }

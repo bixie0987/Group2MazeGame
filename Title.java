@@ -19,4 +19,9 @@ public class Title extends Actor
         image.scale((int)(image.getWidth()*scale), (int)(image.getHeight()*scale));
         setImage(image);
     }
+    public void setTransparency(int i) {
+        GreenfootImage temp = new GreenfootImage(image);
+        temp.setTransparency(i);
+        setImage(temp);
+    }
 }
