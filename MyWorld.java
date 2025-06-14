@@ -75,6 +75,9 @@ public class MyWorld extends World
     private ArrayList<Lighting> allShaders = new ArrayList<Lighting>();
     //arraylist of shaders within a certain radius of player
     private ArrayList<Lighting> shaders1;
+    
+    // Create ScoreDisplay
+    private ScoreDisplay scoreDisplay;
 
 
     /**
@@ -107,6 +110,9 @@ public class MyWorld extends World
 
         buildLighting();
         adjustLighting();
+        
+        // Create ScoreDisplay, pass through instance of this world
+        scoreDisplay = new ScoreDisplay(this);
         
         spawnEnemy();
     }
