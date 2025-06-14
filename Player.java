@@ -104,10 +104,11 @@ public class Player extends Actor
         }
     }
     
-    public boolean getEndBlockReached() {
+    /**public boolean getEndBlockReached() {
         return endBlockReached;
     
     }
+    **/
     
     /**
      *  public boolean getEndBlockReached() {
