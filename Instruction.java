@@ -21,7 +21,7 @@ public class Instruction extends World
         getBackground().fill();
         
         back = new Button("backButton.png", 1);
-        addObject(back, 512, 425);
+        addObject(back, 512, 600);
     }
     public void act() {
         if (back != null && back.getPressed()) {
