@@ -69,6 +69,10 @@ public class GameManager implements PlayerEventListener
      */
     @Override
     public void onPlayerDeath() {
+        // Save data
         PlayerData.getInstance().saveData();
+        
+        // Switch to end screen
+        Greenfoot.setWorld(new EndScreen());
     }
 }
