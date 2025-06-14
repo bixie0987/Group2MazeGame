@@ -69,7 +69,7 @@ public class MyWorld extends World
     private Block[][] theGrid;
     
     // Create Player
-    private Player player;
+    private Player player = new Player();
     
     private Lighting[][] shaders;
     private ArrayList<Lighting> allShaders = new ArrayList<Lighting>();
@@ -116,7 +116,6 @@ public class MyWorld extends World
         
         spawnEnemy();
     }
-
     private void spawnCoins()
     {
         int numCoins = 100;
@@ -128,7 +127,6 @@ public class MyWorld extends World
             }
         }
     }
-
     public void act() {
         // TESTING - if pressed "tab," save game data.
         if(Greenfoot.isKeyDown("tab")) {
@@ -137,7 +135,6 @@ public class MyWorld extends World
         adjustLighting();
         playSoundEffects();
     }
-
     public void spawnEnemy() {
         int x, y;
         do {
@@ -148,7 +145,6 @@ public class MyWorld extends World
         Enemy enemy = new Enemy(player);
         addObject(enemy, getXCoordinate(x), getYCoordinate(y));
     }
-
     public void playSoundEffects(){
         //random sounds that will play
         int randNum = Greenfoot.getRandomNumber(1000);
@@ -255,6 +251,7 @@ public class MyWorld extends World
         long duration = System.nanoTime() - startTime;
 
         // Report generation time if desired
+        // System.out.println("Generated a Maze size " + BLOCKS_WIDE + " x " + BLOCKS_HIGH + " in " + (duration/1000000.0) + " ms.");
         // System.out.println("Generated a Maze size " + BLOCKS_WIDE + " x " + BLOCKS_HIGH + " in " + (duration/1000000.0) + " ms.")
 
         // Set start and end blocks
@@ -457,17 +454,4 @@ public class MyWorld extends World
     public Block[][] getGrid() {
         return theGrid;
     }
-    /*
-    private void spawnCoins ()
-    {
-        int numCoins = 100;
-        for(int i = 0; i<numCoins; i++){
-            int maxX = 1679;  // must be odd
-            int randomX = Greenfoot.getRandomNumber((maxX + 1) / 2) * 2 + 1;
-            int maxY = 719;  // must be odd
-            int randomY = Greenfoot.getRandomNumber((maxY + 1) / 2) * 2 + 1;
-            addObject (new Coins(), randomX, randomY);
-        }
-    }
-    */
 }

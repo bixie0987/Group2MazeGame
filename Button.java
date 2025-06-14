@@ -10,8 +10,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Button extends Actor
 {
     private boolean pressed = false;
+    private boolean hovering = false;
     
     private GreenfootImage image;
+    private GreenfootImage hoverImage;
     
     /**
      * Provides an image for the button and a scale value to resize the image.
@@ -23,10 +25,23 @@ public class Button extends Actor
         image = new GreenfootImage(imageName);
         image.scale((int)(image.getWidth()*scale), (int)(image.getHeight()*scale));
         setImage(image);
+        hoverImage = new GreenfootImage(imageName);
+        hoverImage.scale((int)(image.getWidth()*1.1), (int)(image.getHeight()*1.1));
     }
     
     public void act()
     {
+        if (Greenfoot.getMouseInfo() != null && Greenfoot.mouseMoved(this)) {
+            if (!hovering) {
+                setImage(hoverImage);
+                hovering = true;
+            }
+        } else if (Greenfoot.getMouseInfo() != null && Greenfoot.mouseMoved(null) && !Greenfoot.mouseMoved(this)) {
+            if (hovering) {
+                setImage(image);
+                hovering = false;
+            }
+        }
         if(Greenfoot.mousePressed(this)) {
             pressed = true;
         } else {
