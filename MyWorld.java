@@ -99,6 +99,17 @@ public class MyWorld extends World
             init();
 
         spawn();
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+        setPaintOrder(ImageLabel.class, TextLabel.class, ScoreDisplay.class, Lighting.class, Bullet.class, Enemy.class, Player.class);
+
+>>>>>>> Stashed changes
     }
     public void spawn(){
         spawnCoins();
