@@ -22,10 +22,10 @@ public class HighScoreScreen extends Actor
     private int SCORE_SIZE = 30; // 40
     private Font SCORE_FONT = new Font("MS UI Gothic", SCORE_SIZE);
     private int TITLE_SIZE = 40;
-    private Font TITLE_FONT = new Font("MS UI Gothic", true, false, TITLE_SIZE); // true = bold, false = not italics
+    private Font TITLE_FONT = new Font("Impact", true, false, TITLE_SIZE); // true = bold, false = not italics
     private Font XP_ICON_FONT = new Font("Impact", SCORE_SIZE);
     private int NEW_HIGH_SCORE_SIZE = 50;
-    private Font NEW_HIGH_SCORE_FONT = new Font("MS UI Gothic", true, false, NEW_HIGH_SCORE_SIZE); // true = bold, false = not italics
+    private Font NEW_HIGH_SCORE_FONT = new Font("Impact", true, false, NEW_HIGH_SCORE_SIZE); // true = bold, false = not italics
     
     public HighScoreScreen(World w) {
         int width = 800; // adjust this!!
@@ -66,7 +66,8 @@ public class HighScoreScreen extends Actor
         img.drawString("High score: " + highScore, hsX, hsY); // score text
         img.drawString("High coins: " + highScoreCoins, hsX, hscY); // coins text
         img.drawImage(coinsIconImage, hsX+250, hscY-30); // coins icon
-        img.drawString("XP", hsX+250, hsY); // score icon
+        img.setFont(XP_ICON_FONT); // set font for score xp icon
+        img.drawString("XP", hsX+255, hsY); // score icon
         
         // YOUR SCORE TITLE ----
         int sTitleX = hsTitleX + 380;
@@ -94,12 +95,18 @@ public class HighScoreScreen extends Actor
         img.drawString("Your score: " + score, sX, sY); // score text
         img.drawString("Your coins: " + coins, sX, scY); // coins text
         img.drawImage(coinsIconImage, sX+250, scY-30); // coins icon
-        img.drawString("XP", sX+250, sY); // score icon
+        img.setFont(XP_ICON_FONT); // set font for score xp icon
+        img.drawString("XP", sX+255, sY); // score icon
         
         setImage(img);
         
-        newHighScore();
-        newCoinRecord();
+        // Check if high score was beat - if so, add a message
+        if(GameManager.getInstance().beatHighScore) {
+            congratulateOnNewHighScore();
+        }
+        if(GameManager.getInstance().beatHighCoins) {
+            congratulateOnNewCoinRecord();
+        }
     }
     
     public void setTransparency(int transparency) {
@@ -107,24 +114,24 @@ public class HighScoreScreen extends Actor
         setImage(img);
     }
     
-    public void newHighScore() {
+    public void congratulateOnNewHighScore() {
         // Set font
         img.setFont(NEW_HIGH_SCORE_FONT);
         img.setColor(Color.WHITE);
         
         // Draw text
-        img.drawString("NEW HIGH SCORE!", img.getWidth()/2-230, img.getHeight()-70);
+        img.drawString("NEW HIGH SCORE!", img.getWidth()/2-190, img.getHeight()-70);
         
         setImage(img);
     }
     
-    public void newCoinRecord() {
+    public void congratulateOnNewCoinRecord() {
         // Set font
         img.setFont(NEW_HIGH_SCORE_FONT);
         img.setColor(Color.WHITE);
         
         // Draw text
-        img.drawString("NEW COIN RECORD!", img.getWidth()/2-250, img.getHeight()-1);
+        img.drawString("NEW COIN RECORD!", img.getWidth()/2-210, img.getHeight()-1);
         
         setImage(img);
     }
