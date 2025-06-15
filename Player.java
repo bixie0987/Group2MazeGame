@@ -16,7 +16,10 @@ public class Player extends Actor
     // listener is instantiated in setter, to be called by another class ()
     private PlayerEventListener listener;
     
-    private int health = 100;
+    private int health;
+    private int shortRange = 40;
+    private int midRange = 90;
+    private int farRange = 120;
     public Player()
     {
         GreenfootImage image = new GreenfootImage(MyWorld.BLOCK_SIZE, MyWorld.BLOCK_SIZE);
@@ -43,7 +46,11 @@ public class Player extends Actor
                 listener.onMazeComplete();
             }
         }
-        
+        if(isTouching(Lantern.class)){
+            shortRange += 50;
+            midRange += 50;
+            farRange += 50;
+        }
         // Check if Player is dead. If os, notify all listeners of player death, make them run onPlayerDeath()
         if(health == 0) {
             listener.onPlayerDeath();
@@ -115,13 +122,30 @@ public class Player extends Actor
      */
     public ArrayList<Lighting> getNearbyShaders(){
         //return arraylist of surrounding shaders within a certain radius
-        return (ArrayList<Lighting>)getObjectsInRange(40, Lighting.class);
+        return (ArrayList<Lighting>)getObjectsInRange(shortRange, Lighting.class);
     }
     public ArrayList<Lighting> getFurtherShaders(){
         //return arraylist of surrounding shaders within a certain radius
-        return (ArrayList<Lighting>)getObjectsInRange(90, Lighting.class);
+        return (ArrayList<Lighting>)getObjectsInRange(midRange, Lighting.class);
     }
-    
+    public ArrayList<Lighting> getEvenFurtherShaders(){
+        //return arraylist of surrounding shaders within a certain radius
+        return (ArrayList<Lighting>)getObjectsInRange(farRange, Lighting.class);
+    }
+    /*
+    public ArrayList<Lighting> getNearbyShadersLantern(){
+        //return arraylist of surrounding shaders within a certain radius
+        return (ArrayList<Lighting>)getObjectsInRange(55, Lighting.class);
+    }
+    public ArrayList<Lighting> getFurtherShadersLantern(){
+        //return arraylist of surrounding shaders within a certain radius
+        return (ArrayList<Lighting>)getObjectsInRange(105, Lighting.class);
+    }
+    public ArrayList<Lighting> getEvenFurtherShadersLantern(){
+        //return arraylist of surrounding shaders within a certain radius
+        return (ArrayList<Lighting>)getObjectsInRange(135, Lighting.class);
+    }
+    */
     // getter
     public int getGridX() {
         return gridX;

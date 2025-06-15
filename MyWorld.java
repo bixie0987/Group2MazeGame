@@ -104,6 +104,8 @@ public class MyWorld extends World
     }
     public void spawn(){
         spawnCoins();
+        spawnLantern();
+        spawnSpeedUp();
         
         // Create Player, set its even listeners
         player = new Player();
@@ -125,6 +127,28 @@ public class MyWorld extends World
             int y = Greenfoot.getRandomNumber(BLOCKS_HIGH);
             if(theGrid[x][y] instanceof RoomBlock){
                 addObject (new Coins(), getXCoordinate(x), getYCoordinate(y));
+            }
+        }
+    }
+    private void spawnLantern()
+    {
+        int numLanterns = 10;
+        for(int i = 0; i<numLanterns; i++){
+            int x = Greenfoot.getRandomNumber(BLOCKS_WIDE);
+            int y = Greenfoot.getRandomNumber(BLOCKS_HIGH);
+            if(theGrid[x][y] instanceof RoomBlock){
+                addObject (new Lantern(), getXCoordinate(x), getYCoordinate(y));
+            }
+        }
+    }
+    private void spawnSpeedUp()
+    {
+        int numSpeedUp = 10;
+        for(int i = 0; i<numSpeedUp; i++){
+            int x = Greenfoot.getRandomNumber(BLOCKS_WIDE);
+            int y = Greenfoot.getRandomNumber(BLOCKS_HIGH);
+            if(theGrid[x][y] instanceof RoomBlock){
+                addObject (new SpeedUp(), getXCoordinate(x), getYCoordinate(y));
             }
         }
     }
@@ -216,6 +240,10 @@ public class MyWorld extends World
             s.getImage().setTransparency(255);
         }
 
+        shaders1 = player.getEvenFurtherShaders();
+        for(Lighting s:shaders1){
+            s.getImage().setTransparency(175);
+        }
         shaders1 = player.getFurtherShaders();
         for(Lighting s:shaders1){
             s.getImage().setTransparency(90);
@@ -224,6 +252,7 @@ public class MyWorld extends World
         for(Lighting s:shaders1){
             s.getImage().setTransparency(50);
         }
+        
     }
 
     /**
