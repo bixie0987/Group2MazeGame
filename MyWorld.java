@@ -99,7 +99,7 @@ public class MyWorld extends World
             init();
 
         spawn();
-        setPaintOrder(Lighting.class, Bullet.class, Enemy.class, Player.class);
+        setPaintOrder(ImageLabel.class, TextLabel.class, ScoreDisplay.class, Lighting.class, Bullet.class, Enemy.class, Player.class);
 
     }
     public void spawn(){
