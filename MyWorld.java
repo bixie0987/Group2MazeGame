@@ -109,15 +109,14 @@ public class MyWorld extends World
         player = new Player();
         addObject(player, getXCoordinate(1), getYCoordinate(1));
         player.setEventListener(GameManager.getInstance());
-
+        
+        spawnEnemy();
         buildLighting();
         adjustLighting();
         
         // Create ScoreDisplay, pass through instance of this world
         scoreDisplay = new ScoreDisplay(this);
-        
-        spawnEnemy();
-    }
+        }
     private void spawnCoins()
     {
         int numCoins = 100;
@@ -175,6 +174,7 @@ public class MyWorld extends World
     public void stopped(){
         Sounds.getInstance().pauseBackgroundMusic();
     }
+    
 
     /**
      * Uses shaders to build a grid of dark lighting, with shaders around the player getting increasingly lighter
