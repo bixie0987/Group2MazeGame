@@ -122,8 +122,8 @@ public class MyWorld extends World
         Sounds.getInstance().pauseMonsterFootsteps();
 
 
-        //buildLighting();
-        //adjustLighting();
+        buildLighting();
+        adjustLighting();
 
         spawnEnemy();
         spawnLantern();
@@ -170,7 +170,7 @@ public class MyWorld extends World
         if(Greenfoot.isKeyDown("tab")) {
             PlayerData.getInstance().saveData();
         }
-        //adjustLighting();
+        adjustLighting();
         playSoundEffects();
         
          // Spawn enemies after a delay
