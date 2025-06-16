@@ -14,6 +14,7 @@ public class Sounds extends Actor
     //initializes variables to store sound effects/ambience sound
     //these sounds do not need to be in an array since they do not overlap
     private GreenfootSound backgroundMusic;
+    private GreenfootSound monsterFootsteps;
 
     //array that holds sound effects
     private ArrayList<GreenfootSound> soundList = new ArrayList<GreenfootSound>();
@@ -41,6 +42,10 @@ public class Sounds extends Actor
         backgroundMusic = new GreenfootSound("background_music.wav");
         backgroundMusic.setVolume(60);
         soundList.add(backgroundMusic);
+        
+        monsterFootsteps = new GreenfootSound("monster_footsteps.mp3");
+        monsterFootsteps.setVolume(60);
+        soundList.add(monsterFootsteps);
 
         //adds 15 sounds of the same audio file to their corresponding row of the 2d array
         //their corresponding row is determined by the living being type, which is index 1
@@ -64,7 +69,7 @@ public class Sounds extends Actor
     public static Sounds getInstance(){
         return instance;
     }
-
+    
     //play and stop the sound immediately, which preloads it 
     /**
      * Plays and stops the sound immediately, which preloads it
@@ -82,6 +87,13 @@ public class Sounds extends Actor
     public void playBackgroundMusicLoop(){
         backgroundMusic.playLoop();
     }
+    
+    /**
+     * Plays the monster footsteps on loop
+     */
+    public void playMonsterFootstepsLoop(){
+        monsterFootsteps.playLoop();
+    }
 
     /**
      * Stops playing background music
@@ -91,10 +103,33 @@ public class Sounds extends Actor
     }
     
     /**
+     * Stops playing background music
+     */
+    public void stopMonsterFootsteps(){
+        monsterFootsteps.stop();
+    }
+    
+    /**
+     * Sets monster footsteps to certain volume, 0-100.
+     * 
+     * @param n Integer from 0 to 100 for volume, 0 is silent, 100 is max volume
+     */
+    public void changeStepsVolume(int n){
+        monsterFootsteps.setVolume(n);
+    }
+    
+    /**
      * Pauses background music
      */
     public void pauseBackgroundMusic(){
         backgroundMusic.pause();
+    }
+    
+    /**
+     * Pauses monster footsteps
+     */
+    public void pauseMonsterFootsteps(){
+        monsterFootsteps.pause();
     }
 
     /**
