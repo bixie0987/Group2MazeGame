@@ -12,7 +12,7 @@ public class Enemy extends Actor
 {   
     private MyWorld world;
     private Player player;
-    private int speed = 18; // move 1 block at a time
+    private int speed = 9; // move 1 block at a time
     private int shootingRange = 2;
     private int shootCooldown = 0;
 
@@ -46,7 +46,9 @@ public class Enemy extends Actor
             // Move toward player
             int[] next = bfsToPlayer(currentX, currentY, targetGridX, targetGridY);
             if (next != null) {
-                setLocation(next[0], next[1]);
+                if (getWorld().getObjectsAt(next[0], next[1], Enemy.class).isEmpty()) {
+                    setLocation(next[0], next[1]);
+                }
             }
         }
     
@@ -111,7 +113,7 @@ public class Enemy extends Actor
             world.addObject(bullet, getX(), getY());
             bullet.setLocation(getX(), getY()); // put bullet at correct location
             
-            shootCooldown = 50; // cooldown time in frames (adjust as needed)
+            shootCooldown = 50; // cooldown time in frames 
         } else {
             shootCooldown--;
         }
