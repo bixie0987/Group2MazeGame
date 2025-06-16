@@ -122,12 +122,13 @@ public class MyWorld extends World
         Sounds.getInstance().pauseMonsterFootsteps();
 
 
-        //buildLighting();
-        //adjustLighting();
+        buildLighting();
+        adjustLighting();
 
         spawnEnemy();
         spawnLantern();
         spawnSpeedUp();
+        spawnHeart();
         
         // Create ScoreDisplay, pass through instance of this world
         scoreDisplay = new ScoreDisplay(this);
@@ -154,6 +155,18 @@ public class MyWorld extends World
             }
         }
     }
+    
+    public void spawnHeart() {
+        int numHeart = 10;
+         for(int i = 0; i<numHeart; i++){
+            int x = Greenfoot.getRandomNumber(BLOCKS_WIDE);
+            int y = Greenfoot.getRandomNumber(BLOCKS_HIGH);
+            if(theGrid[x][y] instanceof RoomBlock){
+                addObject (new Heart(), getXCoordinate(x), getYCoordinate(y));
+            }
+        }
+    }
+    
     private void spawnSpeedUp()
     {
         int numSpeedUp = 10;
@@ -170,7 +183,7 @@ public class MyWorld extends World
         if(Greenfoot.isKeyDown("tab")) {
             PlayerData.getInstance().saveData();
         }
-        //adjustLighting();
+        adjustLighting();
         playSoundEffects();
         
          // Spawn enemies after a delay
@@ -361,6 +374,7 @@ public class MyWorld extends World
             }
         }
     }
+    
 
     /**
      * Mr. Cohen's Implementation of Prim's Algorithm for Maze Building on a 

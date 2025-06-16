@@ -81,6 +81,7 @@ public class GameManager implements PlayerEventListener
     public void onPlayerDeath() {
         System.out.println("inside onPlayerDeath()");
         
+        Sounds.getInstance().playSounds(Sounds.PLAYER_DEATH);
         // Save data (score + coins) - but check if high scores are higher first
         if(score > PlayerData.getInstance().highScore) {
             System.out.println("score > highScore");
