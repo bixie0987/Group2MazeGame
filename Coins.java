@@ -22,6 +22,7 @@ public class Coins extends Actor
     {
         if(isTouching(Player.class)){
             getWorld().removeObject(this); // coin disappears when collected
+            
         }
     }
 }
