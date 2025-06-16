@@ -54,9 +54,10 @@ import java.util.ArrayList;
 public class MyWorld extends World
 {
     // Constants
-    public static final int BLOCK_SIZE = 50;
-    public static final int BLOCKS_WIDE = 19; // must be odd
-    public static final int BLOCKS_HIGH = 15; // must be odd
+    public static final int BLOCK_SIZE = 21;
+    public static final int BLOCKS_WIDE = 51; // must be odd
+    public static final int BLOCKS_HIGH = 41; // must be odd
+
     public static final int X_OFFSET = 60;
     public static final int Y_OFFSET = 40;
     public static final int MODE = 0;
@@ -74,13 +75,14 @@ public class MyWorld extends World
     private ArrayList<Lighting> allShaders = new ArrayList<Lighting>();
     //arraylist of shaders within a certain radius of player
     private ArrayList<Lighting> shaders1;
+
     
     // Create ScoreDisplay
     private ScoreDisplay scoreDisplay;
     
     private int enemyWaveCount = 1;
     private int enemySpawnTimer = 0;
-    private int spawnDelay = 400; // ~5 seconds if act() is called 60 times/sec
+    private int spawnDelay = 450; // ~5 seconds if act() is called 60 times/sec
     
 
     /**
