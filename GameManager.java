@@ -78,6 +78,9 @@ public class GameManager implements PlayerEventListener
         /*
         Greenfoot.setWorld(new EndScreen());
         */
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     }
 }
