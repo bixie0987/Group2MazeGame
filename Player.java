@@ -26,7 +26,7 @@ public class Player extends Actor
 
     private SuperStatBar healthBar;
 
-    private int health = 1000; //100
+    private int health = 100; //100
     private int shortRange = 40;
     private int midRange = 90;
     private int farRange = 120;
