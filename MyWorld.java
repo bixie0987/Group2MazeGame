@@ -54,9 +54,9 @@ import java.util.ArrayList;
 public class MyWorld extends World
 {
     // Constants
-    public static final int BLOCK_SIZE = 21;
-    public static final int BLOCKS_WIDE = 51; // must be odd
-    public static final int BLOCKS_HIGH = 41; // must be odd
+    public static final int BLOCK_SIZE = 50;
+    public static final int BLOCKS_WIDE = 19; // must be odd
+    public static final int BLOCKS_HIGH = 15; // must be odd
 
     public static final int X_OFFSET = 60;
     public static final int Y_OFFSET = 40;
