@@ -19,19 +19,20 @@ public class Sounds extends Actor
     //array that holds sound effects
     private ArrayList<GreenfootSound> soundList = new ArrayList<GreenfootSound>();
 
-    private int soundIndex[] = new int[3]; //holds which sound is being played
+    private int soundIndex[] = new int[4]; //holds which sound is being played
     //holds the sound effects of each living being
     //first index holds the type of living being, second index holds duplicates of its audio files
     private GreenfootSound[][] soundArray = new GreenfootSound[soundIndex.length][15];
 
     //array that holds each living being's sound file name
-    private String[] soundNames = {"horror_swish.wav","player_death.mp3","scream.wav"};
+    private String[] soundNames = {"horror_swish.wav","player_death.mp3","scream.wav","jumpscare.mp3"};
 
     //variables to identify living beings
     //* means need to implement
     public final static int HORROR_SWISH = 0; 
-    public final static int PLAYER_DEATH = 1; //*
+    public final static int PLAYER_DEATH = 1;
     public final static int SCREAM = 2;
+    public final static int JUMPSCARE = 3;
 
     /**
      * The constructor is private so that it can't be created by any other classes
