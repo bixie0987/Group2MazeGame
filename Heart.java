@@ -13,6 +13,7 @@ public class Heart extends Upgrades {
     public Heart() {
         heart = new GreenfootImage("heart.png"); 
         setImage(heart);
+        heart.scale(30,30);
 
     }
 

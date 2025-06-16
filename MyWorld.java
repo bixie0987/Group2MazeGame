@@ -80,7 +80,7 @@ public class MyWorld extends World
     
     private int enemyWaveCount = 1;
     private int enemySpawnTimer = 0;
-    private int spawnDelay = 900; // ~5 seconds if act() is called 60 times/sec
+    private int spawnDelay = 400; // ~5 seconds if act() is called 60 times/sec
     
 
     /**
