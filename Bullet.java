@@ -54,7 +54,7 @@ public class Bullet extends Actor {
         
         if (isRed && isTouching(Player.class)) {
             Player p = (Player) getOneIntersectingObject(Player.class);
-            p.takeDamage(5);  // Damage per bullet
+            p.takeDamage(GameManager.getInstance().enemyDamage);  // Damage per bullet
             getWorld().removeObject(this);
             return;
         }
