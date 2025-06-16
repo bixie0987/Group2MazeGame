@@ -17,15 +17,11 @@ public class Player extends Actor
     private PlayerEventListener listener;
     private SuperStatBar healthBar;
     
-<<<<<<< Updated upstream
-    private SuperStatBar healthBar;
-    private int health = 100;
-=======
     private int health = 100;
     private int shortRange = 40;
     private int midRange = 90;
     private int farRange = 120;
->>>>>>> Stashed changes
+
     public Player()
     {
         GreenfootImage image = new GreenfootImage(MyWorld.BLOCK_SIZE, MyWorld.BLOCK_SIZE);
@@ -48,18 +44,11 @@ public class Player extends Actor
     }
     public void act() {
         handleMovement();
-<<<<<<< Updated upstream
         
-        if (healthBar != null) {
-            healthBar.moveMe();
-        }
-        
-=======
          if (healthBar != null) {
             healthBar.moveMe();
         }
 
->>>>>>> Stashed changes
         // Check if Player touches EndBlock. If so, notify all listeners of maze completion, make them run onMazeComplete()
         if(isTouching(EndBlock.class)) {
             if(listener != null) {
@@ -67,24 +56,6 @@ public class Player extends Actor
             }
         }
     
-    }
-    
-    public void takeDamage(int amount) {
-        health -= amount;
-        if (health < 0) health = 0;
-    
-        if (healthBar != null) {
-            healthBar.update(health);
-        }
-<<<<<<< Updated upstream
-    
-        // Check if Player is dead. If os, notify all listeners of player death, make them run onPlayerDeath()
-        if (health == 0 && listener != null) {
-            listener.onPlayerDeath();
-        }
-=======
-        
->>>>>>> Stashed changes
     }
 
     private void handleMovement() {
