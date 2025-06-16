@@ -5,27 +5,51 @@ import java.util.*;
 /**
  * Write a description of class Enemy here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Yuvia
+ * @version June 2025
  */
 public class Enemy extends Actor
 {   
+    private int gridX;
+    private int gridY;
     private MyWorld world;
     private Player player;
-    private int speed = 18; // move 1 block at a time
+    private int speed = 9; // move 1 block at a time
     private int shootingRange = 2;
     private int shootCooldown = 0;
+    private SuperStatBar healthBar;
 
+    private int health = 100;
 
     public Enemy(Player p) {
         this.player = p;
-        GreenfootImage img = new GreenfootImage("enemy_placeholder.png"); 
-        img.scale(20, 20);
+        GreenfootImage img = new GreenfootImage("ghost.png"); 
+        img.scale(40, 40);
         setImage(img);
     }
 
-    public void addedToWorld(World w) {
-        world = (MyWorld) w;
+    @Override
+    protected void addedToWorld(World world) {
+        this.world = (MyWorld) world;
+        int barWidth = getImage().getWidth();
+        healthBar = new SuperStatBar(100, 100, this, barWidth, 6, -20); // -30 = above player
+        world.addObject(healthBar, getX(), getY() - 20);
+        
+        this.gridX = MyWorld.getXCell(getX());
+        this.gridY = MyWorld.getYCell(getY());
+    }
+    
+    public void takeDamage(int amount) {
+        health -= amount;
+        if (health < 0) health = 0;
+
+        if (healthBar != null) {
+            healthBar.update(health);
+        }
+        
+        if (health == 0) {
+            getWorld().removeObject(this);
+        }
     }
 
     public void act() {
@@ -40,13 +64,15 @@ public class Enemy extends Actor
 
         int distance = Math.abs(currentX - targetGridX) + Math.abs(currentY - targetGridY);
          if (distance <= shootingRange) {
-        // Within range → shoot
-        shootAtPlayer();
+            // Within range → shoot
+            shootAtPlayer();
         } else {
             // Move toward player
             int[] next = bfsToPlayer(currentX, currentY, targetGridX, targetGridY);
             if (next != null) {
-                setLocation(next[0], next[1]);
+                if (getWorld().getObjectsAt(next[0], next[1], Enemy.class).isEmpty()) {
+                    setLocation(next[0], next[1]);
+                }
             }
         }
     
@@ -107,12 +133,14 @@ public class Enemy extends Actor
         if (shootCooldown == 0) {
             // Spawn a Bullet object toward the player
             Bullet bullet = new Bullet(getX(), getY(), player.getX(), player.getY());
-            getWorld().addObject(bullet, getX(), getY());
+            MyWorld world = (MyWorld) getWorld();
+            world.addObject(bullet, getX(), getY());
+            bullet.setLocation(getX(), getY()); // put bullet at correct location
             
-            shootCooldown = 50; // cooldown time in frames (adjust as needed)
+            shootCooldown = 50; // cooldown time in frames 
         } else {
             shootCooldown--;
         }
-}
+    }
 
 }

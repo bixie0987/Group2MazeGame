@@ -57,6 +57,7 @@ public class MyWorld extends World
     public static final int BLOCK_SIZE = 21;
     public static final int BLOCKS_WIDE = 51; // must be odd
     public static final int BLOCKS_HIGH = 41; // must be odd
+
     public static final int X_OFFSET = 60;
     public static final int Y_OFFSET = 40;
     public static final int MODE = 0;
@@ -67,17 +68,14 @@ public class MyWorld extends World
 
     // Class Objects and Variables
     private Block[][] theGrid;
-    
+
     // Create Player
-    private Player player;
-    
+    private Player player = new Player();
     private Lighting[][] shaders;
     private ArrayList<Lighting> allShaders = new ArrayList<Lighting>();
     //arraylist of shaders within a certain radius of player
     private ArrayList<Lighting> shaders1;
-<<<<<<< Updated upstream
 
-=======
     
     // Create ScoreDisplay
     private ScoreDisplay scoreDisplay;
@@ -86,7 +84,6 @@ public class MyWorld extends World
     private int enemySpawnTimer = 0;
     private int spawnDelay = 450; // ~5 seconds if act() is called 60 times/sec
     
->>>>>>> Stashed changes
 
     /**
      * Constructor for objects of class Maze.
@@ -107,21 +104,37 @@ public class MyWorld extends World
             init();
 
         spawn();
+        setPaintOrder(ImageLabel.class, TextLabel.class, ScoreDisplay.class, Lighting.class, Bullet.class, Enemy.class, Player.class);
+
     }
+
     public void spawn(){
         spawnCoins();
-        
-        // Create Player, set its even listeners
-        player = new Player();
+
+        // Create Player, set its event listeners
         addObject(player, getXCoordinate(1), getYCoordinate(1));
         player.setEventListener(GameManager.getInstance());
 
+        //Play background music
+        Sounds.getInstance().playBackgroundMusicLoop();
+        Sounds.getInstance().pauseBackgroundMusic();
+        
+        //Play monster footsteps
+        Sounds.getInstance().playMonsterFootstepsLoop();
+        Sounds.getInstance().pauseMonsterFootsteps();
+
+
         buildLighting();
         adjustLighting();
-        
-        spawnEnemy();
-    }
 
+        spawnEnemy();
+        spawnLantern();
+        spawnSpeedUp();
+        spawnHeart();
+        
+        // Create ScoreDisplay, pass through instance of this world
+        scoreDisplay = new ScoreDisplay(this);
+        }
     private void spawnCoins()
     {
         int numCoins = 100;
@@ -133,7 +146,40 @@ public class MyWorld extends World
             }
         }
     }
-
+    private void spawnLantern()
+    {
+        int numLanterns = 10;
+        for(int i = 0; i<numLanterns; i++){
+            int x = Greenfoot.getRandomNumber(BLOCKS_WIDE);
+            int y = Greenfoot.getRandomNumber(BLOCKS_HIGH);
+            if(theGrid[x][y] instanceof RoomBlock){
+                addObject (new Lantern(), getXCoordinate(x), getYCoordinate(y));
+            }
+        }
+    }
+    
+    public void spawnHeart() {
+        int numHeart = 10;
+         for(int i = 0; i<numHeart; i++){
+            int x = Greenfoot.getRandomNumber(BLOCKS_WIDE);
+            int y = Greenfoot.getRandomNumber(BLOCKS_HIGH);
+            if(theGrid[x][y] instanceof RoomBlock){
+                addObject (new Heart(), getXCoordinate(x), getYCoordinate(y));
+            }
+        }
+    }
+    
+    private void spawnSpeedUp()
+    {
+        int numSpeedUp = 10;
+        for(int i = 0; i<numSpeedUp; i++){
+            int x = Greenfoot.getRandomNumber(BLOCKS_WIDE);
+            int y = Greenfoot.getRandomNumber(BLOCKS_HIGH);
+            if(theGrid[x][y] instanceof RoomBlock){
+                addObject (new SpeedUp(), getXCoordinate(x), getYCoordinate(y));
+            }
+        }
+    }
     public void act() {
         // TESTING - if pressed "tab," save game data.
         if(Greenfoot.isKeyDown("tab")) {
@@ -141,8 +187,17 @@ public class MyWorld extends World
         }
         adjustLighting();
         playSoundEffects();
+        
+         // Spawn enemies after a delay
+        enemySpawnTimer++;
+        if (enemySpawnTimer >= spawnDelay) {
+            spawnEnemyWave();
+            enemySpawnTimer = 0;
+            enemyWaveCount++; // increase difficulty
+        }
+        
+        scoreDisplay.updateScoreDisplay();
     }
-
     public void spawnEnemy() {
         int x, y;
         do {
@@ -153,7 +208,6 @@ public class MyWorld extends World
         Enemy enemy = new Enemy(player);
         addObject(enemy, getXCoordinate(x), getYCoordinate(y));
     }
-
     public void playSoundEffects(){
         //random sounds that will play
         int randNum = Greenfoot.getRandomNumber(1000);
@@ -177,11 +231,14 @@ public class MyWorld extends World
             init();
         }
         Sounds.getInstance().playBackgroundMusicLoop();
+        Sounds.getInstance().playMonsterFootstepsLoop();
     }
 
     public void stopped(){
         Sounds.getInstance().pauseBackgroundMusic();
+        Sounds.getInstance().pauseMonsterFootsteps();
     }
+    
 
     /**
      * Uses shaders to build a grid of dark lighting, with shaders around the player getting increasingly lighter
@@ -223,6 +280,10 @@ public class MyWorld extends World
             s.getImage().setTransparency(255);
         }
 
+        shaders1 = player.getEvenFurtherShaders();
+        for(Lighting s:shaders1){
+            s.getImage().setTransparency(175);
+        }
         shaders1 = player.getFurtherShaders();
         for(Lighting s:shaders1){
             s.getImage().setTransparency(90);
@@ -231,8 +292,22 @@ public class MyWorld extends World
         for(Lighting s:shaders1){
             s.getImage().setTransparency(50);
         }
+        
     }
 
+    public void spawnEnemyWave() {
+        for (int i = 0; i < enemyWaveCount; i++) {
+            int x, y;
+            do {
+                x = Greenfoot.getRandomNumber(BLOCKS_WIDE);
+                y = Greenfoot.getRandomNumber(BLOCKS_HIGH);
+            } while (!(theGrid[x][y] instanceof RoomBlock));
+    
+            Enemy enemy = new Enemy(player);
+            addObject(enemy, getXCoordinate(x), getYCoordinate(y));
+        }
+    }
+    
     /**
      * Generate the Maze. This includes setting up the start point for the algorithm, running the algorithm,
      * and placing a start block.
@@ -260,6 +335,7 @@ public class MyWorld extends World
         long duration = System.nanoTime() - startTime;
 
         // Report generation time if desired
+        // System.out.println("Generated a Maze size " + BLOCKS_WIDE + " x " + BLOCKS_HIGH + " in " + (duration/1000000.0) + " ms.");
         // System.out.println("Generated a Maze size " + BLOCKS_WIDE + " x " + BLOCKS_HIGH + " in " + (duration/1000000.0) + " ms.")
 
         // Set start and end blocks
@@ -270,9 +346,7 @@ public class MyWorld extends World
         theGrid[BLOCKS_WIDE-2][BLOCKS_HIGH-2] = end;
         addObject(end, getXCoordinate(BLOCKS_WIDE-2), getYCoordinate(BLOCKS_HIGH-2));
 
-
     }
-
     /*
      * Prepare a Grid for Prim algorithm.
      * 
@@ -302,6 +376,7 @@ public class MyWorld extends World
             }
         }
     }
+    
 
     /**
      * Mr. Cohen's Implementation of Prim's Algorithm for Maze Building on a 
@@ -402,7 +477,7 @@ public class MyWorld extends World
         }
         return theGrid[gridX][gridY] instanceof RoomBlock;
     }
-    
+
     private ArrayList<WallBlock> getRoomWalls (int x, int y){
         ArrayList<WallBlock> walls = new ArrayList<WallBlock>();
         if (theGrid[x-1][y] instanceof WallBlock){
@@ -462,17 +537,4 @@ public class MyWorld extends World
     public Block[][] getGrid() {
         return theGrid;
     }
-    /*
-    private void spawnCoins ()
-    {
-        int numCoins = 100;
-        for(int i = 0; i<numCoins; i++){
-            int maxX = 1679;  // must be odd
-            int randomX = Greenfoot.getRandomNumber((maxX + 1) / 2) * 2 + 1;
-            int maxY = 719;  // must be odd
-            int randomY = Greenfoot.getRandomNumber((maxY + 1) / 2) * 2 + 1;
-            addObject (new Coins(), randomX, randomY);
-        }
-    }
-    */
 }
