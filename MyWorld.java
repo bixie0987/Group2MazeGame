@@ -75,7 +75,18 @@ public class MyWorld extends World
     private ArrayList<Lighting> allShaders = new ArrayList<Lighting>();
     //arraylist of shaders within a certain radius of player
     private ArrayList<Lighting> shaders1;
+<<<<<<< Updated upstream
 
+=======
+    
+    // Create ScoreDisplay
+    private ScoreDisplay scoreDisplay;
+    
+    private int enemyWaveCount = 1;
+    private int enemySpawnTimer = 0;
+    private int spawnDelay = 450; // ~5 seconds if act() is called 60 times/sec
+    
+>>>>>>> Stashed changes
 
     /**
      * Constructor for objects of class Maze.
