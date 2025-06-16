@@ -65,15 +65,12 @@ public class Player extends Actor
         //if there are monsters within 40m radius, play footsteps at high volume
         if(monsterNearby()){
             Sounds.getInstance().changeStepsVolume(90);
-            System.out.println("near");
         }
         else if(monsterFarAway()){
             Sounds.getInstance().changeStepsVolume(40);
-            System.out.println("far");
         }
         else{
             Sounds.getInstance().changeStepsVolume(0);
-            System.out.println("0");
         }
 
         // Check if Player is dead. If so, notify all listeners of player death, make them run onPlayerDeath()
