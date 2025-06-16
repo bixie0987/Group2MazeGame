@@ -4,7 +4,7 @@ import java.util.ArrayList;
 /**
  * Write a description of class Player here.
  * 
- * @author Chin-En, Julia
+ * @author Chin-En, Julia, Yuvia
  * @version Jun 2025
  */
 public class Player extends Actor
@@ -15,11 +15,13 @@ public class Player extends Actor
     // Create listener that 'listens' to notifs of player events - ex: player completed maze, player died
     // listener is instantiated in setter, to be called by another class ()
     private PlayerEventListener listener;
+    private SuperStatBar healthBar;
     
-    private int health;
+    private int health = 100;
     private int shortRange = 40;
     private int midRange = 90;
     private int farRange = 120;
+
     public Player()
     {
         GreenfootImage image = new GreenfootImage(MyWorld.BLOCK_SIZE, MyWorld.BLOCK_SIZE);
@@ -34,28 +36,34 @@ public class Player extends Actor
     
     @Override
     protected void addedToWorld(World world) {
+        int barWidth = getImage().getWidth();
+        healthBar = new SuperStatBar(100, 100, this, barWidth, 6, -20); // -30 = above player
+        world.addObject(healthBar, getX(), getY() - 20);
         this.gridX = MyWorld.getXCell(getX());
         this.gridY = MyWorld.getYCell(getY());
     }
     public void act() {
         handleMovement();
         
+         if (healthBar != null) {
+            healthBar.moveMe();
+        }
+
         // Check if Player touches EndBlock. If so, notify all listeners of maze completion, make them run onMazeComplete()
         if(isTouching(EndBlock.class)) {
             if(listener != null) {
                 listener.onMazeComplete();
             }
         }
+
         if(isTouching(Lantern.class)){
             shortRange += 50;
             midRange += 50;
             farRange += 50;
         }
         // Check if Player is dead. If os, notify all listeners of player death, make them run onPlayerDeath()
-        if(health == 0) {
-            listener.onPlayerDeath();
-        }
     }
+
     private void handleMovement() {
         String key = Greenfoot.getKey();
         if (key == null) {
@@ -89,6 +97,23 @@ public class Player extends Actor
             setLocation(MyWorld.getXCoordinate(gridX), MyWorld.getYCoordinate(gridY));
         }
     }
+    
+     public void takeDamage(int amount) {
+        health -= amount;
+        if (health < 0) health = 0;
+
+        if (healthBar != null) {
+            healthBar.update(health);
+        }
+
+        // Check if Player is dead. If os, notify all listeners of player death, make them run onPlayerDeath()
+        if(health == 0) {
+            if (health == 0 && listener != null) {
+                listener.onPlayerDeath();
+            }
+        }
+    }
+    
     public void checkKeys() {
         int speed = 1;
         if (Greenfoot.isKeyDown("w")) {

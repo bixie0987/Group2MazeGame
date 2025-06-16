@@ -5,8 +5,8 @@ import java.util.*;
 /**
  * Write a description of class Enemy here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Yuvia
+ * @version June 2025
  */
 public class Enemy extends Actor
 {   
