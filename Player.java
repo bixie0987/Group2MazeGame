@@ -133,11 +133,10 @@ public class Player extends Actor
             healthBar.update(health);
         }
 
-        // Check if Player is dead. If so, notify all listeners of player death, make them run onPlayerDeath()
-        if(health == 0) {
-            if (health == 0 && listener != null) {
-                listener.onPlayerDeath();
-            }
+
+        // Check if Player is dead. If os, notify all listeners of player death, make them run onPlayerDeath()
+        if (health == 0 && listener != null) {
+            listener.onPlayerDeath();
         }
     }
 
