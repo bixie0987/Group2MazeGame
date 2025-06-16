@@ -5,8 +5,8 @@ import java.util.*;
 /**
  * Write a description of class Enemy here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Yuvia
+ * @version June 2025
  */
 public class Enemy extends Actor
 {   
@@ -107,7 +107,9 @@ public class Enemy extends Actor
         if (shootCooldown == 0) {
             // Spawn a Bullet object toward the player
             Bullet bullet = new Bullet(getX(), getY(), player.getX(), player.getY());
-            getWorld().addObject(bullet, getX(), getY());
+            MyWorld world = (MyWorld) getWorld();
+            world.addObject(bullet, getX(), getY());
+            bullet.setLocation(getX(), getY()); // put bullet at correct location
             
             shootCooldown = 50; // cooldown time in frames (adjust as needed)
         } else {

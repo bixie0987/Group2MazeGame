@@ -28,6 +28,11 @@ public class Bullet extends Actor {
             return;
         }
         
+        if (isTouching(Player.class)) {
+            Player p = (Player) getOneIntersectingObject(Player.class);
+            p.takeDamage(2);  // Damage per bullet
+        }
+
         setLocation((int)(getX() + dx), (int)(getY() + dy));
     }
 }

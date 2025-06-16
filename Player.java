@@ -4,12 +4,11 @@ import java.util.ArrayList;
 /**
  * Write a description of class Player here.
  * 
- * @author Chin-En, Julia, Elise
+ * @author Chin-En, Julia, Elise, Yuvia
  * @version Jun 2025
  */
 public class Player extends Actor
 {
-
     private int gridX;
     private int gridY;
 
@@ -19,16 +18,26 @@ public class Player extends Actor
     private GreenfootImage spriteSheet = new GreenfootImage("walk.png");
     private Direction direction;
     private Animation animation;
+    private GreenfootImage playerImage = new GreenfootImage("walk.png");
 
     // Create listener that 'listens' to notifs of player events - ex: player completed maze, player died
     // listener is instantiated in setter, to be called by another class ()
     private PlayerEventListener listener;
 
-    private int health;
+    private SuperStatBar healthBar;
+
+    private int health = 100;
+    private int shortRange = 40;
+    private int midRange = 90;
+    private int farRange = 120;
+
     public Player(){
         direction = Direction.RIGHT;
+        //create animation
         animation = AnimationManager.createAnimation(spriteSheet,1,4,9,64, 64);
-        setImage(animation.getOneImage(direction, frame));
+        //get one image from animation
+        playerImage = (GreenfootImage)animation.getOneImage(direction, frame);
+        setImage(playerImage);
     }
 
     public void setEventListener(PlayerEventListener listener) {
@@ -37,6 +46,9 @@ public class Player extends Actor
 
     @Override
     protected void addedToWorld(World world) {
+        int barWidth = getImage().getWidth();
+        healthBar = new SuperStatBar(100, 100, this, barWidth, 6, -20); // -30 = above player
+        world.addObject(healthBar, getX(), getY() - 20);
         this.gridX = MyWorld.getXCell(getX());
         this.gridY = MyWorld.getYCell(getY());
     }
@@ -44,20 +56,30 @@ public class Player extends Actor
     public void act() {
         handleMovement();
         setImage(animation.getOneImage(direction,frame));
+        //Resets frame back to 0 when animation is over
         if(frame==8){
             frame=0;
+        }
+        // Check if Player is dead. If so, notify all listeners of player death, make them run onPlayerDeath()
+        if(health == 0) {
+            listener.onPlayerDeath();
+        }
 
-            // Check if Player touches EndBlock. If so, notify all listeners of maze completion, make them run onMazeComplete()
-            if(isTouching(EndBlock.class)) {
-                if(listener != null) {
-                    listener.onMazeComplete();
-                }
-            }
+        if (healthBar != null) {
+            healthBar.moveMe();
+        }
 
-            // Check if Player is dead. If os, notify all listeners of player death, make them run onPlayerDeath()
-            if(health == 0) {
-                listener.onPlayerDeath();
+        // Check if Player touches EndBlock. If so, notify all listeners of maze completion, make them run onMazeComplete()
+        if(isTouching(EndBlock.class)) {
+            if(listener != null) {
+                listener.onMazeComplete();
             }
+        }
+
+        if(isTouching(Lantern.class)){
+            shortRange += 50;
+            midRange += 50;
+            farRange += 50;
         }
     }
 
@@ -103,6 +125,22 @@ public class Player extends Actor
         }
     }
 
+    public void takeDamage(int amount) {
+        health -= amount;
+        if (health < 0) health = 0;
+
+        if (healthBar != null) {
+            healthBar.update(health);
+        }
+
+        // Check if Player is dead. If so, notify all listeners of player death, make them run onPlayerDeath()
+        if(health == 0) {
+            if (health == 0 && listener != null) {
+                listener.onPlayerDeath();
+            }
+        }
+    }
+
     public void checkKeys() {
         int speed = 1;
         if (Greenfoot.isKeyDown("w")) {
@@ -123,24 +161,35 @@ public class Player extends Actor
         }
     }
 
-    //public boolean getEndBlockReached() {
-        //return endBlockReached;
-    //}
-
-    /**
-     *  public boolean getEndBlockReached() {
-    return endBlockReached; }
-     */
-
     public ArrayList<Lighting> getNearbyShaders(){
         //return arraylist of surrounding shaders within a certain radius
-        return (ArrayList<Lighting>)getObjectsInRange(40, Lighting.class);
+        return (ArrayList<Lighting>)getObjectsInRange(shortRange, Lighting.class);
     }
 
     public ArrayList<Lighting> getFurtherShaders(){
         //return arraylist of surrounding shaders within a certain radius
-        return (ArrayList<Lighting>)getObjectsInRange(90, Lighting.class);
+        return (ArrayList<Lighting>)getObjectsInRange(midRange, Lighting.class);
     }
+
+    public ArrayList<Lighting> getEvenFurtherShaders(){
+        //return arraylist of surrounding shaders within a certain radius
+        return (ArrayList<Lighting>)getObjectsInRange(farRange, Lighting.class);
+    }
+
+    /*
+    public ArrayList<Lighting> getNearbyShadersLantern(){
+    //return arraylist of surrounding shaders within a certain radius
+    return (ArrayList<Lighting>)getObjectsInRange(55, Lighting.class);
+    }
+    public ArrayList<Lighting> getFurtherShadersLantern(){
+    //return arraylist of surrounding shaders within a certain radius
+    return (ArrayList<Lighting>)getObjectsInRange(105, Lighting.class);
+    }
+    public ArrayList<Lighting> getEvenFurtherShadersLantern(){
+    //return arraylist of surrounding shaders within a certain radius
+    return (ArrayList<Lighting>)getObjectsInRange(135, Lighting.class);
+    }
+     */
 
     // getter
     public int getGridX() {

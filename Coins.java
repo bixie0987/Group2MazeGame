@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
+import java.util.ArrayList;
 /**
  * Write a description of class coins here.
  * 
@@ -20,10 +20,8 @@ public class Coins extends Actor
     }
     public void act()
     {
-        /*
-        if(Player.isTouching(Coins.class)){
-            Greenfoot.removeObject(Coins.class);
+        if(isTouching(Player.class)){
+            getWorld().removeObject(this); // coin disappears when collected
         }
-        */
     }
 }

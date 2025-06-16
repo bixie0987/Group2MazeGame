@@ -84,8 +84,6 @@ public class PlayerData
             output.println(highScore);
             
             output.close();
-            
-            System.out.println("Data is saved!");
         } catch(IOException e) {
             System.out.println("Error: " + e);
         }
