@@ -16,6 +16,7 @@ public class Player extends Actor
     // listener is instantiated in setter, to be called by another class ()
     private PlayerEventListener listener;
     
+    private SuperStatBar healthBar;
     private int health = 100;
     public Player()
     {
@@ -31,11 +32,18 @@ public class Player extends Actor
     
     @Override
     protected void addedToWorld(World world) {
+        int barWidth = getImage().getWidth();
+        healthBar = new SuperStatBar(100, 100, this, barWidth, 6, -20); // -30 = above player
+        world.addObject(healthBar, getX(), getY() - 20);
         this.gridX = MyWorld.getXCell(getX());
         this.gridY = MyWorld.getYCell(getY());
     }
     public void act() {
         handleMovement();
+        
+        if (healthBar != null) {
+            healthBar.moveMe();
+        }
         
         // Check if Player touches EndBlock. If so, notify all listeners of maze completion, make them run onMazeComplete()
         if(isTouching(EndBlock.class)) {
@@ -43,12 +51,23 @@ public class Player extends Actor
                 listener.onMazeComplete();
             }
         }
-        
+    
+    }
+    
+    public void takeDamage(int amount) {
+        health -= amount;
+        if (health < 0) health = 0;
+    
+        if (healthBar != null) {
+            healthBar.update(health);
+        }
+    
         // Check if Player is dead. If os, notify all listeners of player death, make them run onPlayerDeath()
-        if(health == 0) {
+        if (health == 0 && listener != null) {
             listener.onPlayerDeath();
         }
     }
+
     private void handleMovement() {
         String key = Greenfoot.getKey();
         if (key == null) {
