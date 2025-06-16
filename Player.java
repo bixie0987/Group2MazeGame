@@ -101,10 +101,8 @@ public class Player extends Actor
         }
 
         // Check if Player is dead. If os, notify all listeners of player death, make them run onPlayerDeath()
-        if(health == 0) {
-            if (health == 0 && listener != null) {
+        if (health == 0 && listener != null) {
                 listener.onPlayerDeath();
-            }
         }
     }
     

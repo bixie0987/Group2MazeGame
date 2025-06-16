@@ -78,6 +78,11 @@ public class MyWorld extends World
     
     // Create ScoreDisplay
     private ScoreDisplay scoreDisplay;
+    
+    private int enemyWaveCount = 1;
+    private int enemySpawnTimer = 0;
+    private int spawnDelay = 900; // ~5 seconds if act() is called 60 times/sec
+    
 
 
     /**
@@ -135,6 +140,14 @@ public class MyWorld extends World
         }
         adjustLighting();
         playSoundEffects();
+        
+         // Spawn enemies after a delay
+        enemySpawnTimer++;
+        if (enemySpawnTimer >= spawnDelay) {
+            spawnEnemyWave();
+            enemySpawnTimer = 0;
+            enemyWaveCount++; // increase difficulty
+        }
     }
     public void spawnEnemy() {
         int x, y;
@@ -226,6 +239,19 @@ public class MyWorld extends World
         }
     }
 
+    public void spawnEnemyWave() {
+        for (int i = 0; i < enemyWaveCount; i++) {
+            int x, y;
+            do {
+                x = Greenfoot.getRandomNumber(BLOCKS_WIDE);
+                y = Greenfoot.getRandomNumber(BLOCKS_HIGH);
+            } while (!(theGrid[x][y] instanceof RoomBlock));
+    
+            Enemy enemy = new Enemy(player);
+            addObject(enemy, getXCoordinate(x), getYCoordinate(y));
+        }
+    }
+    
     /**
      * Generate the Maze. This includes setting up the start point for the algorithm, running the algorithm,
      * and placing a start block.
