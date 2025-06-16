@@ -100,7 +100,6 @@ public class MyWorld extends World
     public void spawn(){
         spawnCoins();
         spawnLantern();
-        spawnSpeedUp();
         
         // Create Player, set its even listeners
         player = new Player();
@@ -131,17 +130,6 @@ public class MyWorld extends World
             int y = Greenfoot.getRandomNumber(BLOCKS_HIGH);
             if(theGrid[x][y] instanceof RoomBlock){
                 addObject (new Lantern(), getXCoordinate(x), getYCoordinate(y));
-            }
-        }
-    }
-    private void spawnSpeedUp()
-    {
-        int numSpeedUp = 10;
-        for(int i = 0; i<numSpeedUp; i++){
-            int x = Greenfoot.getRandomNumber(BLOCKS_WIDE);
-            int y = Greenfoot.getRandomNumber(BLOCKS_HIGH);
-            if(theGrid[x][y] instanceof RoomBlock){
-                addObject (new SpeedUp(), getXCoordinate(x), getYCoordinate(y));
             }
         }
     }
@@ -229,7 +217,7 @@ public class MyWorld extends World
     public void adjustLighting(){
         //reset all shaders to full darkness
         for (Lighting s : allShaders) {
-            s.getImage().setTransparency(255);
+            s.getImage().setTransparency(0);
         }
 
         shaders1 = player.getEvenFurtherShaders();

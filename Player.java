@@ -20,6 +20,7 @@ public class Player extends Actor
     private int shortRange = 40;
     private int midRange = 90;
     private int farRange = 120;
+    private int lanternTimer = 0;
     public Player()
     {
         GreenfootImage image = new GreenfootImage(MyWorld.BLOCK_SIZE, MyWorld.BLOCK_SIZE);
@@ -50,9 +51,19 @@ public class Player extends Actor
             shortRange += 50;
             midRange += 50;
             farRange += 50;
+            lanternTimer++;
+        }
+        if(lanternTimer!=0){
+            lanternTimer++;
+        }
+        if(lanternTimer == 900){
+            shortRange = 40;
+            midRange = 90;
+            farRange = 120;
+            lanternTimer = 0;
         }
         // Check if Player is dead. If os, notify all listeners of player death, make them run onPlayerDeath()
-        if(health == 0) {
+        if(health == 100) {
             listener.onPlayerDeath();
         }
     }
