@@ -56,7 +56,9 @@ public class ScoreDisplay
         w.addObject(coinsIcon, coinsX - 50, Y);
     }
     
-    public void updateScoreDisplay(int newScore, int newCoins) {
+    public void updateScoreDisplay() {
+        int newScore = GameManager.getInstance().score;
+        int newCoins = GameManager.getInstance().coins;
         scoreLabel.updateText(String.valueOf(newScore));
         coinsLabel.updateText(String.valueOf(newCoins));
     }

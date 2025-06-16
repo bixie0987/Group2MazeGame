@@ -54,6 +54,13 @@ public class GameManager implements PlayerEventListener
     }
     
     /**
+     * Resets this instance manually (since singleton classes won't be reset automatically when you press 'reset' on Greenfoot)
+     */
+    public static void resetInstance() {
+        instance = null;
+    }
+    
+    /**
      * Runs when player reaches end of maze. -> Generates new maze, modifies some stats
      * Overrides method in PlayerEventListener interface.
      */
@@ -72,23 +79,55 @@ public class GameManager implements PlayerEventListener
      */
     @Override
     public void onPlayerDeath() {
+        System.out.println("inside onPlayerDeath()");
+        
         Sounds.getInstance().playSounds(Sounds.PLAYER_DEATH);
         // Save data (score + coins) - but check if high scores are higher first
         if(score > PlayerData.getInstance().highScore) {
+            System.out.println("score > highScore");
+            System.out.println("highScore: " + PlayerData.getInstance().highScore);
+            System.out.println("score: " + score);
             PlayerData.getInstance().highScore = score;
             beatHighScore = true;
+            
+            PlayerData.getInstance().saveData();
+        } else {
+            System.out.println("score not higher");
         }
         if(coins > PlayerData.getInstance().highScoreCoins) {
+            System.out.println("coins > highCoins");
+            System.out.println("highCoins: " + PlayerData.getInstance().highScoreCoins);
+            System.out.println("coins: " + coins);
             PlayerData.getInstance().highScoreCoins = coins;
             beatHighCoins = true;
+            
+            PlayerData.getInstance().saveData();
+        } else {
+            System.out.println("coins not higher");
         }
-        PlayerData.getInstance().saveData();
         
         // Switch to end screen
+        Greenfoot.setWorld(new EndScreen());
         
         //Stops playing background music
         Sounds.getInstance().stopBackgroundMusic();
         Sounds.getInstance().stopMonsterFootsteps();
-        Greenfoot.setWorld(new EndScreen());
+        
+        
+        // Reset instance!
+        resetInstance();
+    }
+    
+    /**
+     * Runs when player collects a coin.
+     * Overrides method in PlayerEventListener interface.
+     */
+    @Override
+    public void onCoinCollected() {
+        // Increase coins and score
+        coins++;
+        score += coinWorth;
+        
+        // ScoreDisplay is updated in MyWorld
     }
 }

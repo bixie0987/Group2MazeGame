@@ -27,7 +27,7 @@ public class Player extends Actor
 
     private SuperStatBar healthBar;
 
-    private int health = 100;
+    private int health = 100; //100
     private int shortRange = 40;
     private int midRange = 90;
     private int farRange = 120;
@@ -89,6 +89,13 @@ public class Player extends Actor
         if(isTouching(EndBlock.class)) {
             if(listener != null) {
                 listener.onMazeComplete();
+            }
+        }
+        
+        // Check if Player touches coin. If so, notify all listeners of coin collection, make them run onCoinCollected()
+        if(isTouching(Coins.class)) {
+            if(listener != null) {
+                listener.onCoinCollected();
             }
         }
 
