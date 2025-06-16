@@ -60,6 +60,22 @@ public class Player extends Actor
         if(frame==8){
             frame=0;
         }
+
+        //Check for nearby monsters and play corresponding sound effect
+        //if there are monsters within 40m radius, play footsteps at high volume
+        if(monsterNearby()){
+            Sounds.getInstance().changeStepsVolume(90);
+            System.out.println("near");
+        }
+        else if(monsterFarAway()){
+            Sounds.getInstance().changeStepsVolume(40);
+            System.out.println("far");
+        }
+        else{
+            Sounds.getInstance().changeStepsVolume(0);
+            System.out.println("0");
+        }
+
         // Check if Player is dead. If so, notify all listeners of player death, make them run onPlayerDeath()
         if(health == 0) {
             listener.onPlayerDeath();
@@ -164,6 +180,16 @@ public class Player extends Actor
     public ArrayList<Lighting> getNearbyShaders(){
         //return arraylist of surrounding shaders within a certain radius
         return (ArrayList<Lighting>)getObjectsInRange(shortRange, Lighting.class);
+    }
+
+    public boolean monsterNearby(){
+        // returns true if there is no enemy within 80 pixels
+        return !getObjectsInRange(80, Enemy.class).isEmpty();
+    }
+
+    public boolean monsterFarAway(){
+        // returns true if there is no enemy within 120 pixels
+        return !getObjectsInRange(120, Enemy.class).isEmpty();
     }
 
     public ArrayList<Lighting> getFurtherShaders(){

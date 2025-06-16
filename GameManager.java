@@ -87,6 +87,7 @@ public class GameManager implements PlayerEventListener
         
         //Stops playing background music
         Sounds.getInstance().stopBackgroundMusic();
+        Sounds.getInstance().stopMonsterFootsteps();
         Greenfoot.setWorld(new EndScreen());
     }
 }

@@ -55,8 +55,8 @@ public class MyWorld extends World
 {
     // Constants
     public static final int BLOCK_SIZE = 50;
-    public static final int BLOCKS_WIDE = 51; // must be odd
-    public static final int BLOCKS_HIGH = 41; // must be odd
+    public static final int BLOCKS_WIDE = 19; // must be odd
+    public static final int BLOCKS_HIGH = 15; // must be odd
     public static final int X_OFFSET = 60;
     public static final int Y_OFFSET = 40;
     public static final int MODE = 0;
@@ -111,10 +111,14 @@ public class MyWorld extends World
         //Play background music
         Sounds.getInstance().playBackgroundMusicLoop();
         Sounds.getInstance().pauseBackgroundMusic();
+        
+        //Play monster footsteps
+        Sounds.getInstance().playMonsterFootstepsLoop();
+        Sounds.getInstance().pauseMonsterFootsteps();
 
 
-        buildLighting();
-        adjustLighting();
+        //buildLighting();
+        //adjustLighting();
 
         spawnEnemy();
         spawnLantern();
@@ -161,7 +165,7 @@ public class MyWorld extends World
         if(Greenfoot.isKeyDown("tab")) {
             PlayerData.getInstance().saveData();
         }
-        adjustLighting();
+        //adjustLighting();
         playSoundEffects();
     }
     public void spawnEnemy() {
@@ -197,10 +201,12 @@ public class MyWorld extends World
             init();
         }
         Sounds.getInstance().playBackgroundMusicLoop();
+        Sounds.getInstance().playMonsterFootstepsLoop();
     }
 
     public void stopped(){
         Sounds.getInstance().pauseBackgroundMusic();
+        Sounds.getInstance().pauseMonsterFootsteps();
     }
     
 
