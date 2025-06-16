@@ -84,6 +84,9 @@ public class GameManager implements PlayerEventListener
         PlayerData.getInstance().saveData();
         
         // Switch to end screen
+        
+        //Stops playing background music
+        Sounds.getInstance().stopBackgroundMusic();
         Greenfoot.setWorld(new EndScreen());
     }
 }

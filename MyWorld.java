@@ -54,7 +54,7 @@ import java.util.ArrayList;
 public class MyWorld extends World
 {
     // Constants
-    public static final int BLOCK_SIZE = 18;
+    public static final int BLOCK_SIZE = 50;
     public static final int BLOCKS_WIDE = 51; // must be odd
     public static final int BLOCKS_HIGH = 41; // must be odd
     public static final int X_OFFSET = 60;
@@ -67,10 +67,9 @@ public class MyWorld extends World
 
     // Class Objects and Variables
     private Block[][] theGrid;
-    
+
     // Create Player
     private Player player = new Player();
-    
     private Lighting[][] shaders;
     private ArrayList<Lighting> allShaders = new ArrayList<Lighting>();
     //arraylist of shaders within a certain radius of player
@@ -78,7 +77,6 @@ public class MyWorld extends World
     
     // Create ScoreDisplay
     private ScoreDisplay scoreDisplay;
-
 
     /**
      * Constructor for objects of class Maze.
@@ -102,19 +100,25 @@ public class MyWorld extends World
         setPaintOrder(ImageLabel.class, TextLabel.class, ScoreDisplay.class, Lighting.class, Bullet.class, Enemy.class, Player.class);
 
     }
+
     public void spawn(){
         spawnCoins();
-        spawnLantern();
-        spawnSpeedUp();
-        
-        // Create Player, set its even listeners
-        player = new Player();
+
+        // Create Player, set its event listeners
         addObject(player, getXCoordinate(1), getYCoordinate(1));
         player.setEventListener(GameManager.getInstance());
-        
-        spawnEnemy();
+
+        //Play background music
+        Sounds.getInstance().playBackgroundMusicLoop();
+        Sounds.getInstance().pauseBackgroundMusic();
+
+
         buildLighting();
         adjustLighting();
+
+        spawnEnemy();
+        spawnLantern();
+        spawnSpeedUp();
         
         // Create ScoreDisplay, pass through instance of this world
         scoreDisplay = new ScoreDisplay(this);
@@ -293,9 +297,7 @@ public class MyWorld extends World
         theGrid[BLOCKS_WIDE-2][BLOCKS_HIGH-2] = end;
         addObject(end, getXCoordinate(BLOCKS_WIDE-2), getYCoordinate(BLOCKS_HIGH-2));
 
-
     }
-
     /*
      * Prepare a Grid for Prim algorithm.
      * 
@@ -425,7 +427,7 @@ public class MyWorld extends World
         }
         return theGrid[gridX][gridY] instanceof RoomBlock;
     }
-    
+
     private ArrayList<WallBlock> getRoomWalls (int x, int y){
         ArrayList<WallBlock> walls = new ArrayList<WallBlock>();
         if (theGrid[x-1][y] instanceof WallBlock){
