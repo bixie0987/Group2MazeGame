@@ -22,6 +22,9 @@ public class GameManager implements PlayerEventListener
     public int score;
     public int mazeNumber;
     
+    public boolean beatHighScore = false;
+    public boolean beatHighCoins = false;
+    
     // Constructor is private - prevents direct instantiation, no one else can make a new constructor
     private GameManager() {
         // Set initial variable values
@@ -69,6 +72,18 @@ public class GameManager implements PlayerEventListener
      */
     @Override
     public void onPlayerDeath() {
+        // Save data (score + coins) - but check if high scores are higher first
+        if(score > PlayerData.getInstance().highScore) {
+            PlayerData.getInstance().highScore = score;
+            beatHighScore = true;
+        }
+        if(coins > PlayerData.getInstance().highScoreCoins) {
+            PlayerData.getInstance().highScoreCoins = coins;
+            beatHighCoins = true;
+        }
         PlayerData.getInstance().saveData();
+        
+        // Switch to end screen
+        Greenfoot.setWorld(new EndScreen());
     }
 }
