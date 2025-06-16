@@ -21,6 +21,7 @@ public class GameManager implements PlayerEventListener
     public int coinWorth; // value of each coin, greater value converts to greater score; increases as mazeNumber increases
     public int score;
     public int mazeNumber;
+    public int enemyDamage = 4;
     
     public boolean beatHighScore = false;
     public boolean beatHighCoins = false;
@@ -71,6 +72,7 @@ public class GameManager implements PlayerEventListener
         
         mazeNumber++;
         coinWorth++;
+        enemyDamage+=2;
     }
     
     /**
