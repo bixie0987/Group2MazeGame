@@ -19,8 +19,8 @@ public class Enemy extends Actor
 
     public Enemy(Player p) {
         this.player = p;
-        GreenfootImage img = new GreenfootImage("enemy_placeholder.png"); 
-        img.scale(20, 20);
+        GreenfootImage img = new GreenfootImage("ghost.png"); 
+        img.scale(40, 40);
         setImage(img);
     }
 
