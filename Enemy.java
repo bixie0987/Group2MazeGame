@@ -113,7 +113,7 @@ public class Enemy extends Actor
             world.addObject(bullet, getX(), getY());
             bullet.setLocation(getX(), getY()); // put bullet at correct location
             
-            shootCooldown = 50; // cooldown time in frames (adjust as needed)
+            shootCooldown = 50; // cooldown time in frames 
         } else {
             shootCooldown--;
         }

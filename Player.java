@@ -137,6 +137,13 @@ public class Player extends Actor
             setLocation(MyWorld.getXCoordinate(gridX), MyWorld.getYCoordinate(gridY));
         }
     }
+    public void heal(int amount) {
+        health += amount;
+        if (health > 100) health = 100; // cap at max health
+        if (healthBar != null) {
+            healthBar.update(health);
+        }
+    }
 
     public void takeDamage(int amount) {
         health -= amount;
