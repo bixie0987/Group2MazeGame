@@ -9,6 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Instruction extends World
 {
     private Button back;
+    private Title text1;
     /**
      * Constructor for objects of class Instruction.
      * 
@@ -19,6 +20,9 @@ public class Instruction extends World
         
         getBackground().setColor(Color.BLACK);
         getBackground().fill();
+        
+        text1 = new Title("helpTXT1.png", 0.5);
+        addObject(text1, 256, 250);
         
         back = new Button("backButton.png", 1);
         addObject(back, 512, 600);

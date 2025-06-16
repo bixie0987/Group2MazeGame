@@ -8,11 +8,21 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class ScoreDisplay
 {
-    private int highScore, highScoreCoins, currScore, currCoins;
-    private TextLabel highScoreLabel, highScoreCoinsLabel, currScoreLabel, currCoinsLabel;
+    // For text
+    private int score, coins;
+    private TextLabel scoreLabel, coinsLabel;
     
     private Color SCORE_COLOUR = Color.WHITE;
-    private int SCORE_SIZE = 30;
+    private int SCORE_SIZE = 28;
+    private Font SCORE_FONT = new Font("MS UI Gothic", SCORE_SIZE);
+    private Font XP_ICON_FONT = new Font("Impact", SCORE_SIZE);
+    // Impact, Lucida Console, Consolas, Courier New
+    
+    
+    // For icons
+    private GreenfootImage coinsIconImage;
+    private ImageLabel coinsIcon;
+    private TextLabel scoreIcon;
     
     // General position coordinates of entire score display
     int X;
@@ -20,32 +30,34 @@ public class ScoreDisplay
     
     public ScoreDisplay(World w) {
         // Set general position coordinates
-        X = w.getWidth() - 100;
-        Y = 50;
-        
-        // Set high score values (taken from PlayerData)
-        highScore = PlayerData.getInstance().highScore;
-        highScoreCoins = PlayerData.getInstance().highScoreCoins;
+        X = 900;
+        Y = 23;
         
         // Set current score values (taken from GameManager)
-        currScore = GameManager.getInstance().score;
-        currCoins = GameManager.getInstance().coins;
+        score = GameManager.getInstance().score;
+        coins = GameManager.getInstance().coins;
         
         // Set Labels
-        highScoreLabel = new TextLabel("High: " + highScore + " points", SCORE_SIZE, SCORE_COLOUR);
-        highScoreCoinsLabel = new TextLabel("High: " + highScoreCoins + " coins", SCORE_SIZE, SCORE_COLOUR);
-        currScoreLabel = new TextLabel("Curr: " + currScore + " points", SCORE_SIZE, SCORE_COLOUR);
-        currCoinsLabel = new TextLabel("Curr: " + currCoins + " coins", SCORE_SIZE, SCORE_COLOUR);
+        scoreLabel = new TextLabel(String.valueOf(score), SCORE_SIZE, SCORE_COLOUR, SCORE_FONT);
+        coinsLabel = new TextLabel(String.valueOf(coins), SCORE_SIZE, SCORE_COLOUR, SCORE_FONT);
         
-        // Add textLabel objects
-        w.addObject(highScoreLabel, X, Y);
-        w.addObject(highScoreCoinsLabel, X, Y + 20);
-        w.addObject(currScoreLabel, X, Y + 40);
-        w.addObject(currCoinsLabel, X, Y + 60);
+        // Set icons
+        coinsIconImage = new GreenfootImage("coin.png");
+        coinsIconImage.scale((int)(coinsIconImage.getWidth()*1.5), (int)(coinsIconImage.getHeight()*1.5));
+        coinsIcon = new ImageLabel(coinsIconImage);
+        scoreIcon = new TextLabel("XP", SCORE_SIZE, SCORE_COLOUR, XP_ICON_FONT);
+        
+        // Add textLabel and icon objects
+        int scoreX = X + 80;
+        int coinsX = X - 80;
+        w.addObject(scoreLabel, scoreX, Y);
+        w.addObject(coinsLabel, coinsX, Y);
+        w.addObject(scoreIcon, scoreX - 30, Y);        
+        w.addObject(coinsIcon, coinsX - 50, Y);
     }
     
     public void updateScoreDisplay(int newScore, int newCoins) {
-        currScoreLabel.updateText(String.valueOf(newScore));
-        currCoinsLabel.updateText(String.valueOf(newCoins));
+        scoreLabel.updateText(String.valueOf(newScore));
+        coinsLabel.updateText(String.valueOf(newCoins));
     }
 }
