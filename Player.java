@@ -19,6 +19,7 @@ public class Player extends Actor
     private Direction direction;
     private Animation animation;
     private GreenfootImage playerImage = new GreenfootImage("walk.png");
+    private String facing = "right";
 
     // Create listener that 'listens' to notifs of player events - ex: player completed maze, player died
     // listener is instantiated in setter, to be called by another class ()
@@ -30,6 +31,8 @@ public class Player extends Actor
     private int shortRange = 40;
     private int midRange = 90;
     private int farRange = 120;
+    
+    private int shootCooldown = 0;
 
     public Player(){
         direction = Direction.RIGHT;
@@ -94,8 +97,25 @@ public class Player extends Actor
             midRange += 50;
             farRange += 50;
         }
+        
+        if (Greenfoot.isKeyDown("space")) {
+            shoot();
+        }
     }
 
+    private void shoot() {
+        if (shootCooldown == 0) {
+            // Spawn a Bullet object toward the player
+            Bullet bullet = new Bullet(getX(), getY(), facing);
+            MyWorld world = (MyWorld) getWorld();
+            world.addObject(bullet, getX(), getY());
+            
+            shootCooldown = 10; // cooldown time in frames (adjust as needed)
+        } else if (shootCooldown > 0) {
+            shootCooldown--;
+        }
+    }
+    
     private void handleMovement() {
         String key = Greenfoot.getKey();
         if (key == null) {
@@ -110,21 +130,25 @@ public class Player extends Actor
                 targetGridY--;
                 frame++;
                 direction = Direction.UP;
+                facing = "up";
                 break;
             case "s":
                 targetGridY++;
                 frame++;
                 direction = Direction.DOWN;
+                facing = "down";
                 break;
             case "a":
                 targetGridX--;
                 frame++;
                 direction = Direction.LEFT;
+                facing = "left";
                 break;
             case "d":
                 targetGridX++;
                 frame++;
                 direction = Direction.RIGHT;
+                facing = "right";
                 break;
             default:
                 return;
@@ -205,20 +229,20 @@ public class Player extends Actor
         return (ArrayList<Lighting>)getObjectsInRange(farRange, Lighting.class);
     }
 
-    /*
+    
     public ArrayList<Lighting> getNearbyShadersLantern(){
-    //return arraylist of surrounding shaders within a certain radius
-    return (ArrayList<Lighting>)getObjectsInRange(55, Lighting.class);
+        //return arraylist of surrounding shaders within a certain radius
+        return (ArrayList<Lighting>)getObjectsInRange(55, Lighting.class);
     }
     public ArrayList<Lighting> getFurtherShadersLantern(){
-    //return arraylist of surrounding shaders within a certain radius
-    return (ArrayList<Lighting>)getObjectsInRange(105, Lighting.class);
+        //return arraylist of surrounding shaders within a certain radius
+        return (ArrayList<Lighting>)getObjectsInRange(105, Lighting.class);
     }
     public ArrayList<Lighting> getEvenFurtherShadersLantern(){
-    //return arraylist of surrounding shaders within a certain radius
-    return (ArrayList<Lighting>)getObjectsInRange(135, Lighting.class);
+        //return arraylist of surrounding shaders within a certain radius
+        return (ArrayList<Lighting>)getObjectsInRange(135, Lighting.class);
     }
-     */
+    
 
     // getter
     public int getGridX() {

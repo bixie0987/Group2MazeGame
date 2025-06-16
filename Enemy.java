@@ -10,12 +10,16 @@ import java.util.*;
  */
 public class Enemy extends Actor
 {   
+    private int gridX;
+    private int gridY;
     private MyWorld world;
     private Player player;
     private int speed = 9; // move 1 block at a time
     private int shootingRange = 2;
     private int shootCooldown = 0;
+    private SuperStatBar healthBar;
 
+    private int health = 100;
 
     public Enemy(Player p) {
         this.player = p;
@@ -24,8 +28,28 @@ public class Enemy extends Actor
         setImage(img);
     }
 
-    public void addedToWorld(World w) {
-        world = (MyWorld) w;
+    @Override
+    protected void addedToWorld(World world) {
+        this.world = (MyWorld) world;
+        int barWidth = getImage().getWidth();
+        healthBar = new SuperStatBar(100, 100, this, barWidth, 6, -20); // -30 = above player
+        world.addObject(healthBar, getX(), getY() - 20);
+        
+        this.gridX = MyWorld.getXCell(getX());
+        this.gridY = MyWorld.getYCell(getY());
+    }
+    
+    public void takeDamage(int amount) {
+        health -= amount;
+        if (health < 0) health = 0;
+
+        if (healthBar != null) {
+            healthBar.update(health);
+        }
+        
+        if (health == 0) {
+            getWorld().removeObject(this);
+        }
     }
 
     public void act() {
@@ -40,8 +64,8 @@ public class Enemy extends Actor
 
         int distance = Math.abs(currentX - targetGridX) + Math.abs(currentY - targetGridY);
          if (distance <= shootingRange) {
-        // Within range → shoot
-        shootAtPlayer();
+            // Within range → shoot
+            shootAtPlayer();
         } else {
             // Move toward player
             int[] next = bfsToPlayer(currentX, currentY, targetGridX, targetGridY);
@@ -117,6 +141,6 @@ public class Enemy extends Actor
         } else {
             shootCooldown--;
         }
-}
+    }
 
 }
