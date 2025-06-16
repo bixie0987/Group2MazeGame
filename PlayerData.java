@@ -69,6 +69,8 @@ public class PlayerData
     }
     
     public void saveData() {
+        System.out.println("inside saveData now");
+        
         // Prevent saving data if data hasn't been loaded yet!
         // (Bc without loadData(), variables are null, so saveData would error)
         if(!dataLoaded) {

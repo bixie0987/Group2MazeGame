@@ -26,7 +26,7 @@ public class Player extends Actor
 
     private SuperStatBar healthBar;
 
-    private int health = 100;
+    private int health = 1000; //100
     private int shortRange = 40;
     private int midRange = 90;
     private int farRange = 120;
@@ -65,11 +65,11 @@ public class Player extends Actor
         //if there are monsters within 40m radius, play footsteps at high volume
         if(monsterNearby()){
             Sounds.getInstance().changeStepsVolume(90);
-            System.out.println("near");
+            //System.out.println("near");
         }
         else if(monsterFarAway()){
             Sounds.getInstance().changeStepsVolume(40);
-            System.out.println("far");
+            //System.out.println("far");
         }
         else{
             Sounds.getInstance().changeStepsVolume(0);
@@ -89,6 +89,13 @@ public class Player extends Actor
         if(isTouching(EndBlock.class)) {
             if(listener != null) {
                 listener.onMazeComplete();
+            }
+        }
+        
+        // Check if Player touches coin. If so, notify all listeners of coin collection, make them run onCoinCollected()
+        if(isTouching(Coins.class)) {
+            if(listener != null) {
+                listener.onCoinCollected();
             }
         }
 

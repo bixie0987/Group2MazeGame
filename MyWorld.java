@@ -180,6 +180,8 @@ public class MyWorld extends World
             enemySpawnTimer = 0;
             enemyWaveCount++; // increase difficulty
         }
+        
+        scoreDisplay.updateScoreDisplay();
     }
     public void spawnEnemy() {
         int x, y;
