@@ -32,7 +32,12 @@ public class Bullet extends Actor {
             Player p = (Player) getOneIntersectingObject(Player.class);
             p.takeDamage(2);  // Damage per bullet
         }
+<<<<<<< Updated upstream
                 
+=======
+
+        
+>>>>>>> Stashed changes
         setLocation((int)(getX() + dx), (int)(getY() + dy));
     }
 }
