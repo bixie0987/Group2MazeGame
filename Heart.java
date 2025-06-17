@@ -1,7 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Heart here.
+ * The Heart class represents a collectible item that heals the player
+ * when picked up. It inherits from the Upgrades class.
+ * 
+ * When the player touches the heart, they gain health, and the heart is removed from the world.
  * 
  * @author Yuvia 
  * @version June 2025
