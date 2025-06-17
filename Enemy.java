@@ -14,18 +14,23 @@ public class Enemy extends Actor
     private int gridY;
     private MyWorld world;
     private Player player;
-    private int speed = 9; // move 1 block at a time
+    private int speed = 5; // move 1 block at a time
     private int shootingRange = 2;
     private int shootCooldown = 0;
     private SuperStatBar healthBar;
 
-    private int health = 100;
+    private int health;
 
-    public Enemy(Player p) {
+    public Enemy(Player p, int waveNumber) {
         this.player = p;
         GreenfootImage img = new GreenfootImage("ghost.png"); 
         img.scale(40, 40);
         setImage(img);
+        
+        // Set health based on wave number
+        int baseHP = 30 + 20 * (waveNumber - 1);
+        if (baseHP > 100) baseHP = 100;
+        this.health = baseHP;
     }
 
     @Override

@@ -3,8 +3,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class Bullet here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Yuvia
+ * @version June 2025
  */
 public class Bullet extends Actor {
     private double dx, dy;
@@ -60,7 +60,7 @@ public class Bullet extends Actor {
         }
         if (!isRed && isTouching(Enemy.class)) {
             Enemy e = (Enemy) getOneIntersectingObject(Enemy.class);
-            e.takeDamage(10);
+            e.takeDamage(15);
             getWorld().removeObject(this);
             return;
         }
