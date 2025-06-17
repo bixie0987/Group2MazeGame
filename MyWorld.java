@@ -129,7 +129,6 @@ public class MyWorld extends World
 
         spawnEnemy();
         spawnLantern();
-        spawnSpeedUp();
         spawnHeart();
         
         // Create ScoreDisplay, pass through instance of this world
@@ -169,17 +168,6 @@ public class MyWorld extends World
         }
     }
     
-    private void spawnSpeedUp()
-    {
-        int numSpeedUp = 10;
-        for(int i = 0; i<numSpeedUp; i++){
-            int x = Greenfoot.getRandomNumber(BLOCKS_WIDE);
-            int y = Greenfoot.getRandomNumber(BLOCKS_HIGH);
-            if(theGrid[x][y] instanceof RoomBlock){
-                addObject (new SpeedUp(), getXCoordinate(x), getYCoordinate(y));
-            }
-        }
-    }
     public void act() {
         adjustLighting();
         playSoundEffects();
