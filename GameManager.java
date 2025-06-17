@@ -100,7 +100,7 @@ public class GameManager implements PlayerEventListener
         }
         
         // Switch to end screen
-        Greenfoot.setWorld(new EndScreen());
+        Greenfoot.setWorld(new ScaryCohen());
         
         //Stops playing background music
         Sounds.getInstance().stopBackgroundMusic();

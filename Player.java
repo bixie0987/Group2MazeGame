@@ -34,6 +34,8 @@ public class Player extends Actor
     
     private int shootCooldown = 0;
 
+    private int lanternTimer = 0;
+
     public Player(){
         direction = Direction.RIGHT;
         //create animation
@@ -122,6 +124,21 @@ public class Player extends Actor
         
         if (Greenfoot.isKeyDown("space")) {
             shoot();
+        }
+        
+        if(isTouching(Lantern.class)){
+            shortRange += 50;
+            midRange += 50;
+            farRange += 50;
+        }
+        if(lanternTimer!=0){
+            lanternTimer++;
+        }
+        if(lanternTimer == 900){
+            shortRange -= 50;
+            midRange -= 50;
+            farRange -=50;
+            lanternTimer = 0;
         }
     }
 
