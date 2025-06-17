@@ -113,7 +113,7 @@ public class MyWorld extends World
 
         // Create Player, set its event listeners
         addObject(player, getXCoordinate(1), getYCoordinate(1));
-        player.setEventListener(GameManager.getInstance());
+        player.addEventListener(GameManager.getInstance());
 
         //Play background music
         Sounds.getInstance().playBackgroundMusicLoop();
@@ -181,10 +181,6 @@ public class MyWorld extends World
         }
     }
     public void act() {
-        // TESTING - if pressed "tab," save game data.
-        if(Greenfoot.isKeyDown("tab")) {
-            PlayerData.getInstance().saveData();
-        }
         adjustLighting();
         playSoundEffects();
         
@@ -207,6 +203,9 @@ public class MyWorld extends World
 
         Enemy enemy = new Enemy(player);
         addObject(enemy, getXCoordinate(x), getYCoordinate(y));
+        
+        // Set enemy to be a Player event listener
+        player.addEventListener(enemy);
     }
     public void playSoundEffects(){
         //random sounds that will play
@@ -305,6 +304,8 @@ public class MyWorld extends World
     
             Enemy enemy = new Enemy(player);
             addObject(enemy, getXCoordinate(x), getYCoordinate(y));
+            // Set enemy to be a Player event listener
+            player.addEventListener(enemy);
         }
     }
     

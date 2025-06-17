@@ -23,7 +23,7 @@ public class Player extends Actor
 
     // Create listener that 'listens' to notifs of player events - ex: player completed maze, player died
     // listener is instantiated in setter, to be called by another class ()
-    private PlayerEventListener listener;
+    private ArrayList<PlayerEventListener> listeners;
 
     private SuperStatBar healthBar;
 
@@ -41,10 +41,22 @@ public class Player extends Actor
         //get one image from animation
         playerImage = (GreenfootImage)animation.getOneImage(direction, frame);
         setImage(playerImage);
+        
+        listeners = new ArrayList<>();
     }
 
-    public void setEventListener(PlayerEventListener listener) {
-        this.listener = listener;
+    /**
+     * Add listener to list of listeners.
+     */
+    public void addEventListener(PlayerEventListener listener) {
+        listeners.add(listener);
+    }
+    
+    /**
+     * Remove listener from list of listeners.
+     */
+    public void removeEventListener(PlayerEventListener listener) {
+        listeners.remove(listener);
     }
 
     @Override
@@ -76,10 +88,13 @@ public class Player extends Actor
             Sounds.getInstance().changeStepsVolume(0);
         }
 
+        /*
         // Check if Player is dead. If so, notify all listeners of player death, make them run onPlayerDeath()
         if(health == 0) {
-            listener.onPlayerDeath();
-        }
+            for(PlayerEventListener listener : listeners) {
+                listener.onPlayerDeath();
+            }
+        }*/
 
         if (healthBar != null) {
             healthBar.moveMe();
@@ -87,14 +102,14 @@ public class Player extends Actor
 
         // Check if Player touches EndBlock. If so, notify all listeners of maze completion, make them run onMazeComplete()
         if(isTouching(EndBlock.class)) {
-            if(listener != null) {
+            for(PlayerEventListener listener : listeners) {
                 listener.onMazeComplete();
             }
         }
         
         // Check if Player touches coin. If so, notify all listeners of coin collection, make them run onCoinCollected()
         if(isTouching(Coins.class)) {
-            if(listener != null) {
+            for(PlayerEventListener listener : listeners) {
                 listener.onCoinCollected();
             }
         }
@@ -128,7 +143,10 @@ public class Player extends Actor
         if (key == null) {
             return;
         }
-
+        for(PlayerEventListener listener : listeners) {
+            listener.onPlayerMoved(); // If player has moved, notify listeners that player has moved 1 step (enemy, a listener, will proceed to also move 1 step)
+        }
+        
         int targetGridX = gridX;
         int targetGridY = gridY;
 
@@ -186,8 +204,10 @@ public class Player extends Actor
 
 
         // Check if Player is dead. If os, notify all listeners of player death, make them run onPlayerDeath()
-        if (health == 0 && listener != null) {
-            listener.onPlayerDeath();
+        if (health == 0) {
+            for(PlayerEventListener listener : listeners) {
+                listener.onPlayerDeath();
+            }
         }
     }
 
