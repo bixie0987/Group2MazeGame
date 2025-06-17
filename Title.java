@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class title here.
+ * For titles and instruction visuals, non animated (except for the game over)
  * 
  * @author Chin-En
  * @version Jun 2025

@@ -2,7 +2,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.ArrayList;
 
 /**
- * Player
+ * The player shoots, picks up stuff, and moves around, that's it.
  * 
  * @author Chin-En, Julia, Elise, Yuvia
  * @version June 2025

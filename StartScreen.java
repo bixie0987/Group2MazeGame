@@ -1,7 +1,8 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class StartScreen here.
+ * Main menu will have the game title (shadow's below) and two buttons to either go
+ * to the game or to the instruction page.
  * 
  * @author Chin-En
  * @version Jun 2025
