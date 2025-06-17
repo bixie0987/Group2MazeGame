@@ -122,6 +122,7 @@ public class Player extends Actor
             shortRange += 50;
             midRange += 50;
             farRange += 50;
+            lanternTimer++;
         }
         
         if (Greenfoot.isKeyDown("space")) {
