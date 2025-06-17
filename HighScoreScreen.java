@@ -1,10 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class HighScoreScreen here.
+ * This Actor's image displays all high scores, current scores, and high score messages for EndScreen.
  * 
  * @author Julia 
- * @version Jun 2025
+ * @version June 2025
  */
 public class HighScoreScreen extends Actor
 {
@@ -27,6 +27,11 @@ public class HighScoreScreen extends Actor
     private int NEW_HIGH_SCORE_SIZE = 50;
     private Font NEW_HIGH_SCORE_FONT = new Font("Impact", true, false, NEW_HIGH_SCORE_SIZE); // true = bold, false = not italics
     
+    /**
+     * Draws all elements of the high score screen onto this Actor's image.
+     * 
+     * @param w     Reference to the world it's added to.
+     */
     public HighScoreScreen(World w) {
         int width = 800; // adjust this!!
         int height = 500;
@@ -109,11 +114,19 @@ public class HighScoreScreen extends Actor
         }
     }
     
+    /**
+     * Sets transparency of entire high score screen.
+     * 
+     * @param transparency      New transparency to set to.
+     */
     public void setTransparency(int transparency) {
         img.setTransparency(transparency);
         setImage(img);
     }
     
+    /**
+     * Displays text if player got a new high score for XP.
+     */
     public void congratulateOnNewHighScore() {
         // Set font
         img.setFont(NEW_HIGH_SCORE_FONT);
@@ -125,6 +138,9 @@ public class HighScoreScreen extends Actor
         setImage(img);
     }
     
+    /**
+     * Displays text if player got a new high score for coins.
+     */
     public void congratulateOnNewCoinRecord() {
         // Set font
         img.setFont(NEW_HIGH_SCORE_FONT);

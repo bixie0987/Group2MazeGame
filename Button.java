@@ -4,8 +4,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * Creates pressable buttons of a customizable image.
  * (This class is taken from the RobotBuilder project)
  * 
- * @author Julia
- * @version April 2025
+ * @author Julia, Chin-En
+ * @version Jun 2025
+ * 
+ * Button generator: https://www.imageonlinetools.com/button-generator
  */
 public class Button extends Actor
 {

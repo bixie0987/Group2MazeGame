@@ -4,7 +4,7 @@
  * Uses concept of event listening (learned from ChatGPT).
  * 
  * @author Julia
- * @version Jun 2025
+ * @version June 2025
  */
 public interface PlayerEventListener  
 {
@@ -13,4 +13,6 @@ public interface PlayerEventListener
     public void onPlayerDeath();
     
     public void onCoinCollected();
+    
+    public void onPlayerMoved();
 }

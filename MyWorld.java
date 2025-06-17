@@ -48,15 +48,15 @@ import java.util.ArrayList;
  * 
  * https://www.gamedeveloper.com/programming/algorithms-for-making-more-interesting-mazes
  * 
- * @author Jordan Cohen
- * @version 1.0, Dec 2022
+ * @author Jordan Cohen, Chin-En, Julia, Jaclyn, Elise, Yuvia
+ * @version Jun 2025
  */
 public class MyWorld extends World
 {
     // Constants
-    public static final int BLOCK_SIZE = 21;
-    public static final int BLOCKS_WIDE = 51; // must be odd
-    public static final int BLOCKS_HIGH = 41; // must be odd
+    public static final int BLOCK_SIZE = 50;
+    public static final int BLOCKS_WIDE = 19; // must be odd
+    public static final int BLOCKS_HIGH = 15; // must be odd
 
     public static final int X_OFFSET = 60;
     public static final int Y_OFFSET = 40;
@@ -113,7 +113,7 @@ public class MyWorld extends World
 
         // Create Player, set its event listeners
         addObject(player, getXCoordinate(1), getYCoordinate(1));
-        player.setEventListener(GameManager.getInstance());
+        player.addEventListener(GameManager.getInstance());
 
         //Play background music
         Sounds.getInstance().playBackgroundMusicLoop();
@@ -129,7 +129,6 @@ public class MyWorld extends World
 
         spawnEnemy();
         spawnLantern();
-        spawnSpeedUp();
         spawnHeart();
         
         // Create ScoreDisplay, pass through instance of this world
@@ -169,22 +168,7 @@ public class MyWorld extends World
         }
     }
     
-    private void spawnSpeedUp()
-    {
-        int numSpeedUp = 10;
-        for(int i = 0; i<numSpeedUp; i++){
-            int x = Greenfoot.getRandomNumber(BLOCKS_WIDE);
-            int y = Greenfoot.getRandomNumber(BLOCKS_HIGH);
-            if(theGrid[x][y] instanceof RoomBlock){
-                addObject (new SpeedUp(), getXCoordinate(x), getYCoordinate(y));
-            }
-        }
-    }
     public void act() {
-        // TESTING - if pressed "tab," save game data.
-        if(Greenfoot.isKeyDown("tab")) {
-            PlayerData.getInstance().saveData();
-        }
         adjustLighting();
         playSoundEffects();
         
@@ -207,6 +191,9 @@ public class MyWorld extends World
 
         Enemy enemy = new Enemy(player, enemyWaveCount);
         addObject(enemy, getXCoordinate(x), getYCoordinate(y));
+        
+        // Set enemy to be a Player event listener
+        player.addEventListener(enemy);
     }
     public void playSoundEffects(){
         //random sounds that will play
@@ -305,6 +292,8 @@ public class MyWorld extends World
     
             Enemy enemy = new Enemy(player,enemyWaveCount);
             addObject(enemy, getXCoordinate(x), getYCoordinate(y));
+            // Set enemy to be a Player event listener
+            player.addEventListener(enemy);
         }
     }
     

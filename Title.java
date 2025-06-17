@@ -1,10 +1,12 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class title here.
+ * For titles and instruction visuals, non animated (except for the game over)
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Chin-En
+ * @version Jun 2025
+ * 
+ * Pixel word ai generator: https://deepai.org/
  */
 public class Title extends Actor
 {

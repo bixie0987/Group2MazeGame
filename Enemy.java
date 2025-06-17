@@ -14,7 +14,7 @@ import java.util.*;
  * @author Yuvia, Julia
  * @version June 2025
  */
-public class Enemy extends Actor
+public class Enemy extends Actor implements PlayerEventListener
 {   
     private int gridX;
     private int gridY;
@@ -66,11 +66,40 @@ public class Enemy extends Actor
         }
         
         if (health == 0) {
+            // Remove this enemy from being a listener for PlayerEventListener
+            player.removeEventListener(this);
+            
             getWorld().removeObject(this);
         }
     }
 
     public void act() {
+        
+    }
+    
+    /**
+     * Empty method lol ignore this.
+     */
+    @Override
+    public void onMazeComplete() {}
+    
+    /**
+     * Empty method lol ignore this.
+     */
+    @Override
+    public void onPlayerDeath() {}
+    
+    /**
+     * Empty method lol ignore this.
+     */
+    @Override
+    public void onCoinCollected() {}
+    
+    /**
+     * Runs each time a player moves 1 step. -> Pathfinds towards player by 1 step
+     */
+    @Override
+    public void onPlayerMoved() {
         moveTowardPlayer();
     }
 
@@ -79,20 +108,8 @@ public class Enemy extends Actor
         int currentY = MyWorld.getYCell(getY());
         int targetGridX = player.getGridX();
         int targetGridY = player.getGridY();
-<<<<<<< Updated upstream
 
-        int distance = Math.abs(currentX - targetGridX) + Math.abs(currentY - targetGridY);
-         if (distance <= shootingRange) {
-            // Within range → shoot
-            shootAtPlayer();
-        } else {
-            // Move toward player
-            int[] next = bfsToPlayer(currentX, currentY, targetGridX, targetGridY);
-            if (next != null) {
-                if (getWorld().getObjectsAt(next[0], next[1], Enemy.class).isEmpty()) {
-                    setLocation(next[0], next[1]);
-                }
-=======
+   
        
         // Shoot at player
         int distance = Math.abs(currentX - targetGridX) + Math.abs(currentY - targetGridY);
@@ -106,7 +123,6 @@ public class Enemy extends Actor
         if (next != null) {
             if (getWorld().getObjectsAt(next[0], next[1], Enemy.class).isEmpty()) {
                 setLocation(next[0], next[1]);
->>>>>>> Stashed changes
             }
         }
     

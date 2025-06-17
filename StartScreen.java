@@ -1,16 +1,15 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class StartScreen here.
+ * Main menu will have the game title (shadow's below) and two buttons to either go
+ * to the game or to the instruction page.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Chin-En
+ * @version Jun 2025
  */
 public class StartScreen extends World
 {
     private Button playButton;
-    private Button loadButton;
-    private Button scoreButton;
     private Button helpButton;
     private Title titleLogo;
     /**
@@ -26,16 +25,10 @@ public class StartScreen extends World
         getBackground().fill();
         
         playButton = new Button("playButton.png", 1);
-        addObject(playButton, 512, 425);
-        
-        loadButton = new Button("loadButton.png", 1);
-        addObject(loadButton, 512, 525);
-        
-        scoreButton = new Button("scoreButton.png", 1);
-        addObject(scoreButton, 512, 625);
+        addObject(playButton, 512, 550);
         
         helpButton = new Button("helpButton.png", 1);
-        addObject(helpButton, 512, 725);
+        addObject(helpButton, 512, 650);
         
         titleLogo = new Title("titleGraphic.png", 1.5);
         addObject(titleLogo, 512, 200);
@@ -43,9 +36,6 @@ public class StartScreen extends World
     public void act() {
         if (playButton != null && playButton.getPressed()) {
             Greenfoot.setWorld(new MyWorld());
-        }
-        if (scoreButton != null && scoreButton.getPressed()) {
-            Greenfoot.setWorld(new Scoreboard());
         }
         if (helpButton != null && helpButton.getPressed()) {
             Greenfoot.setWorld(new Instruction());

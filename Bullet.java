@@ -7,7 +7,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * - Enemy bullets are red and automatically target the player's location.
  * - Bullets deal damage on impact and are removed upon hitting their target or going off screen.
  * 
- * @author Yuvia
+ * @author Yuvia, Chin-En
  * @version June 2025
  */
 public class Bullet extends Actor {
