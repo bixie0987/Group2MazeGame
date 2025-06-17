@@ -48,8 +48,8 @@ import java.util.ArrayList;
  * 
  * https://www.gamedeveloper.com/programming/algorithms-for-making-more-interesting-mazes
  * 
- * @author Jordan Cohen
- * @version 1.0, Dec 2022
+ * @author Jordan Cohen, Chin-En, Julia, Jaclyn, Elise, Yuvia
+ * @version Jun 2025
  */
 public class MyWorld extends World
 {
