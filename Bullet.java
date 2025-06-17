@@ -1,7 +1,11 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Bullet here.
+ *  Bullet class represents projectiles fired by either the player or enemies.
+ * 
+ * - Player bullets are yellow and move in one of the four cardinal directions.
+ * - Enemy bullets are red and automatically target the player's location.
+ * - Bullets deal damage on impact and are removed upon hitting their target or going off screen.
  * 
  * @author Yuvia, Chin-En
  * @version June 2025
@@ -11,6 +15,11 @@ public class Bullet extends Actor {
     private double speed = 5;
     private boolean isRed;
 
+    
+    /**
+     * Constructor for enemy bullet.
+     * Fires from start position toward target (usually the player).
+     */
     public Bullet(int startX, int startY, int targetX, int targetY) {
         GreenfootImage img = new GreenfootImage(5, 5);
         img.setColor(Color.RED);
@@ -23,6 +32,10 @@ public class Bullet extends Actor {
         dy = Math.sin(angle) * speed;
     }
     
+     /**
+     * Constructor for player bullet.
+     * Fires in the direction the player is facing.
+     */
     public Bullet(int startX, int startY, String direction) {
         GreenfootImage img = new GreenfootImage(5, 5);
         img.setColor(Color.YELLOW);
@@ -65,6 +78,7 @@ public class Bullet extends Actor {
             return;
         }
 
+        // Move bullet forward
         setLocation((int)(getX() + dx), (int)(getY() + dy));
     }
 }

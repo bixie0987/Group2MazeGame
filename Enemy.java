@@ -3,9 +3,15 @@ import java.util.*;
 
 
 /**
- * Write a description of class Enemy here.
+ * Enemy class represents a hostile character that tracks and shoots at the player.
  * 
- * @author Yuvia
+ * Tracks the player using a BFS pathfinding algorithm.
+ * Shoots when the player is within a certain range.
+ * Has a health bar that decreases when hit by bullets.
+ * Enemy health increases with wave number (max capped at 100).
+ * 
+ * 
+ * @author Yuvia, Julia
  * @version June 2025
  */
 public class Enemy extends Actor implements PlayerEventListener
@@ -21,6 +27,9 @@ public class Enemy extends Actor implements PlayerEventListener
 
     private int health;
 
+    /**
+     * Constructor initializes enemy with a reference to the player and sets health based on wave number.
+     */
     public Enemy(Player p, int waveNumber) {
         this.player = p;
         GreenfootImage img = new GreenfootImage("ghost.png"); 
@@ -33,6 +42,10 @@ public class Enemy extends Actor implements PlayerEventListener
         this.health = baseHP;
     }
 
+    /**
+     * Called automatically when the enemy is added to the world.
+     * Sets up the health bar and initializes grid position.
+     */
     @Override
     protected void addedToWorld(World world) {
         this.world = (MyWorld) world;
@@ -95,23 +108,8 @@ public class Enemy extends Actor implements PlayerEventListener
         int currentY = MyWorld.getYCell(getY());
         int targetGridX = player.getGridX();
         int targetGridY = player.getGridY();
-        
-        // commenting this out for now, replaced with code underneath -Julia
-        /*
-        int distance = Math.abs(currentX - targetGridX) + Math.abs(currentY - targetGridY);
-         if (distance <= shootingRange) {
-            // Within range → shoot
-            shootAtPlayer();
-        } else {
-            // Move toward player
-            int[] next = bfsToPlayer(currentX, currentY, targetGridX, targetGridY);
-            if (next != null) {
-                if (getWorld().getObjectsAt(next[0], next[1], Enemy.class).isEmpty()) {
-                    setLocation(next[0], next[1]);
-                }
-            }
-        }
-        */
+
+   
        
         // Shoot at player
         int distance = Math.abs(currentX - targetGridX) + Math.abs(currentY - targetGridY);
