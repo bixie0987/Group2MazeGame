@@ -4,7 +4,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * Manages on-screen score display.
  * 
  * @author Julia
- * @version Jun 2025
+ * @version June 2025
  */
 public class ScoreDisplay
 {
@@ -29,6 +29,11 @@ public class ScoreDisplay
     int X;
     int Y;
     
+    /**
+     * Sets the display values, creates and adds their text onto screen.
+     * 
+     * @param w     Reference to the world that this ScoreDisplay is displayed in.
+     */
     public ScoreDisplay(World w) {
         // Set general position coordinates
         X = 900;
@@ -61,6 +66,9 @@ public class ScoreDisplay
         w.addObject(mazeNumLabel, 60, Y);
     }
     
+    /**
+     * Updates all displayed variables to their new values.
+     */
     public void updateScoreDisplay() {
         int newScore = GameManager.getInstance().score;
         int newCoins = GameManager.getInstance().coins;
