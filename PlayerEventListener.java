@@ -13,4 +13,6 @@ public interface PlayerEventListener
     public void onPlayerDeath();
     
     public void onCoinCollected();
+    
+    public void onPlayerMoved();
 }

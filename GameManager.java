@@ -132,4 +132,10 @@ public class GameManager implements PlayerEventListener
         
         // ScoreDisplay is updated in MyWorld
     }
+    
+    /**
+     * Empty method lol ignore this.
+     */
+    @Override
+    public void onPlayerMoved() {}
 }
