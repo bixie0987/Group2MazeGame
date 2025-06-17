@@ -6,6 +6,8 @@ import java.util.ArrayList;
  * 
  * @author Chin-En, Julia, Elise, Yuvia
  * @version June 2025
+ * 
+ * ChatGPT for player movement, case switch code
  */
 public class Player extends Actor
 {
@@ -126,11 +128,6 @@ public class Player extends Actor
             shoot();
         }
         
-        if(isTouching(Lantern.class)){
-            shortRange += 50;
-            midRange += 50;
-            farRange += 50;
-        }
         if(lanternTimer!=0){
             lanternTimer++;
         }
