@@ -303,7 +303,7 @@ public class MyWorld extends World
                 y = Greenfoot.getRandomNumber(BLOCKS_HIGH);
             } while (!(theGrid[x][y] instanceof RoomBlock));
     
-            Enemy enemy = new Enemy(player);
+            Enemy enemy = new Enemy(player,enemyWaveCount);
             addObject(enemy, getXCoordinate(x), getYCoordinate(y));
         }
     }
