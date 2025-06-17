@@ -31,9 +31,7 @@ public class GameManager implements PlayerEventListener
         coins = 0;
         coinWorth = 1;
         score = 0;
-        mazeNumber = 0;
-        
-        System.out.println("GameManager constructor"); // TESTING
+        mazeNumber = 1;
         
         // Load player data (this line is currently the 1st time that PlayerData is called, so this is where PlayerData instance is created.)
         // (Later, when working on UI, if high score is displayed at the BEGINNING, then move this line there)
@@ -80,8 +78,6 @@ public class GameManager implements PlayerEventListener
      */
     @Override
     public void onPlayerDeath() {
-        System.out.println("inside onPlayerDeath()");
-        
         Sounds.getInstance().playSounds(Sounds.PLAYER_DEATH);
         // Save data (score + coins) - but check if high scores are higher first
         if(score > PlayerData.getInstance().highScore) {
@@ -92,8 +88,6 @@ public class GameManager implements PlayerEventListener
             beatHighScore = true;
             
             PlayerData.getInstance().saveData();
-        } else {
-            System.out.println("score not higher");
         }
         if(coins > PlayerData.getInstance().highScoreCoins) {
             System.out.println("coins > highCoins");
@@ -103,8 +97,6 @@ public class GameManager implements PlayerEventListener
             beatHighCoins = true;
             
             PlayerData.getInstance().saveData();
-        } else {
-            System.out.println("coins not higher");
         }
         
         // Switch to end screen
