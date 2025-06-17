@@ -3,13 +3,13 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Manages game overall, oversees game flow.
  * Useful bc maze will reload (therefore MyWorld is reinstantiated for every maze), but this doesn't!
- * I tried to make this a singleton! (aka only one instance of GameManager exists, global access to it)
+ * I made this a singleton (aka only one instance of GameManager exists, global access to it)
  * 
- * Sources I used to learn this:
+ * Sources I used to learn singleton:
  * ChatGPT, GeeksForGeeks (https://www.geeksforgeeks.org/singleton-class-java/)
  * 
  * @author Julia
- * @version Jun 2025
+ * @version June 2025
  */
 public class GameManager implements PlayerEventListener
 {
@@ -26,15 +26,12 @@ public class GameManager implements PlayerEventListener
     public boolean beatHighScore = false;
     public boolean beatHighCoins = false;
     
-    // Constructor is private - prevents direct instantiation, no one else can make a new constructor
     private GameManager() {
         // Set initial variable values
         coins = 0;
         coinWorth = 1;
         score = 0;
-        mazeNumber = 0;
-        
-        System.out.println("GameManager constructor"); // TESTING
+        mazeNumber = 1;
         
         // Load player data (this line is currently the 1st time that PlayerData is called, so this is where PlayerData instance is created.)
         // (Later, when working on UI, if high score is displayed at the BEGINNING, then move this line there)
@@ -43,8 +40,8 @@ public class GameManager implements PlayerEventListener
     }
     
     /**
-     * Public getter for one-and-only instance
-     * Other classes access GameManager's variables/methods through this getter
+     * Public getter for one-and-only instance.
+     * Other classes access GameManager's variables/methods through this getter.
      */
     public static GameManager getInstance() {
         if(instance == null) {
@@ -55,14 +52,14 @@ public class GameManager implements PlayerEventListener
     }
     
     /**
-     * Resets this instance manually (since singleton classes won't be reset automatically when you press 'reset' on Greenfoot)
+     * Resets this instance manually (since singleton classes won't be reset automatically when you press 'reset' on Greenfoot).
      */
     public static void resetInstance() {
         instance = null;
     }
     
     /**
-     * Runs when player reaches end of maze. -> Generates new maze, modifies some stats
+     * Runs when player reaches end of maze. -> Generates new maze, modifies some stats.
      * Overrides method in PlayerEventListener interface.
      */
     @Override
@@ -81,8 +78,6 @@ public class GameManager implements PlayerEventListener
      */
     @Override
     public void onPlayerDeath() {
-        System.out.println("inside onPlayerDeath()");
-        
         Sounds.getInstance().playSounds(Sounds.PLAYER_DEATH);
         // Save data (score + coins) - but check if high scores are higher first
         if(score > PlayerData.getInstance().highScore) {
@@ -93,8 +88,6 @@ public class GameManager implements PlayerEventListener
             beatHighScore = true;
             
             PlayerData.getInstance().saveData();
-        } else {
-            System.out.println("score not higher");
         }
         if(coins > PlayerData.getInstance().highScoreCoins) {
             System.out.println("coins > highCoins");
@@ -104,8 +97,6 @@ public class GameManager implements PlayerEventListener
             beatHighCoins = true;
             
             PlayerData.getInstance().saveData();
-        } else {
-            System.out.println("coins not higher");
         }
         
         // Switch to end screen

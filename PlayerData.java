@@ -12,11 +12,11 @@ import java.io.PrintWriter;
 import java.io.IOException;
 
 /**
- * Manages loading/saving player save files.
+ * Manages loading/saving player save files. (should be pretty foolproof/unbreakable)
  * Uses Singleton pattern (just like GameManager)
  * 
  * @author Julia
- * @version Jun 2025
+ * @version June 2025
  */
 public class PlayerData  
 {
@@ -43,8 +43,8 @@ public class PlayerData
     }
     
     /**
-     * Public getter for one-and-only instance
-     * Other classes access GameManager's variables/methods through this getter
+     * Public getter for one-and-only instance.
+     * Other classes access GameManager's variables/methods through this getter.
      */
     public static PlayerData getInstance() {
         if(instance == null) {
@@ -68,9 +68,10 @@ public class PlayerData
         System.out.println("highScore: " + highScore);
     }
     
+    /**
+     * Saves high scores to file.
+     */
     public void saveData() {
-        System.out.println("inside saveData now");
-        
         // Prevent saving data if data hasn't been loaded yet!
         // (Bc without loadData(), variables are null, so saveData would error)
         if(!dataLoaded) {
@@ -91,10 +92,10 @@ public class PlayerData
         }
     }
     
+    /**
+     * Loads high scores from file.
+     */
     public void loadData() {
-        // TESTING
-        System.out.println("inside loadData() method now");
-        
         try {
             Scanner scan = new Scanner(new File("player_save.txt"));
             
@@ -121,9 +122,6 @@ public class PlayerData
             highScore = dataArray[1];
             
             dataLoaded = true;
-            
-            // TESTING
-            printData();
         } catch(FileNotFoundException e) {
             System.out.println("Save file not found.");
             dataLoaded = false;

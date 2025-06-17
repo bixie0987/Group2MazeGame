@@ -56,7 +56,7 @@ public class EndScreen extends World
             fadeTimer2 += 5;
             int transparency = Math.min(fadeTimer2, 255);
             highScoreScreen.setTransparency(transparency);
-        } else if (fadeTimer2 >= 225 && fadeTimer2 < 1200) {
+        } else if (fadeTimer2 >= 225 && fadeTimer2 < 2400) {
             fadeTimer2 += 5;
         } else {
             // Remove previous screen's objects
